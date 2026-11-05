@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الإعدادات وتخصيص البيئة الحسية | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="max-width: 720px; margin-top: 30px; margin-bottom: 60px;">
+    
+    <div style="margin-bottom: 25px;">
+      <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+        <i class="fa-solid fa-sliders"></i> الإعدادات وتخصيص البيئة الحسية
+      </h1>
+      <p style="color: var(--text-muted); margin: 4px 0 0 0;">
+        تخصيص الواجهة لتلائم الحساسيات الحسية والبصرية والسمعية للأطفال ذوي طيف التوحد ومتلازمة داون.
+      </p>
+    </div>
+
+    <!-- بطاقة ضبط البيئة الحسية -->
+    <div class="interactive-card text-right" style="padding: 28px; margin-bottom: 24px;">
+      <h2 style="font-size: 1.3rem; margin-top: 0; color: var(--primary);"><i class="fa-solid fa-feather"></i> البيئة الحسية والمهدئات البصرية</h2>
+      
+      <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 15px;">
+        <label style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 12px; cursor: pointer;">
+          <div>
+            <strong>وضع الهدوء الحسي (Sensory Calm Mode)</strong>
+            <div style="font-size: 0.85rem; color: #64748b;">إيقاف كافة الحركات السريعة والتأثيرات المفاجئة لملاءمة الأطفال ذوي الحساسية البصرية.</div>
+          </div>
+          <input type="checkbox" id="calmModeCheck" onchange="toggleSetting('calm')">
+        </label>
+
+        <label style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 12px; cursor: pointer;">
+          <div>
+            <strong>خط تسهيل القراءة لعسر القراءة (Dyslexia-Friendly)</strong>
+            <div style="font-size: 0.85rem; color: #64748b;">تباعد مريح بين الحروف لتسهيل القراءة وتخفيف التداخل البصري.</div>
+          </div>
+          <input type="checkbox" id="dyslexiaCheck" onchange="toggleSetting('dyslexia')">
+        </label>
+
+        <label style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 12px; cursor: pointer;">
+          <div>
+            <strong>وضع التباين العالي (High Contrast)</strong>
+            <div style="font-size: 0.85rem; color: #64748b;">ألوان فائقة الوضوح لذوي الإعاقات البصرية المصاحبة.</div>
+          </div>
+          <input type="checkbox" id="contrastCheck" onchange="toggleSetting('contrast')">
+        </label>
+
+        <label style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 12px; cursor: pointer;">
+          <div>
+            <strong>الوضع الليلي المريح (Dark Mode)</strong>
+            <div style="font-size: 0.85rem; color: #64748b;">خلفية داكنة لتقليل توهج الشاشة وإجهاد العين.</div>
+          </div>
+          <input type="checkbox" id="darkModeCheck" onchange="toggleSetting('dark')">
+        </label>
+      </div>
+    </div>
+
+    <!-- بطاقة ضبط النطق الصوتي العربي -->
+    <div class="interactive-card text-right" style="padding: 28px;">
+      <h2 style="font-size: 1.3rem; margin-top: 0; color: var(--mint-green);"><i class="fa-solid fa-volume-high"></i> نبرة وسرعة النطق الصوتي (TTS)</h2>
+      
+      <div class="form-group" style="margin-top: 15px;">
+        <label>سرعة النطق (Rate) - يفضل السرعة الهادئة 0.75 للأطفال</label>
+        <input type="range" id="speechRateRange" min="0.5" max="1.2" step="0.05" value="0.75" class="form-control" oninput="updateSpeechDemo()">
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #64748b; margin-top: 4px;">
+          <span>بطيء وهادئ جدًا (0.5)</span>
+          <span id="rateValText" style="font-weight: bold; color: var(--primary);">0.75x</span>
+          <span>سريع (1.2)</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="testVoice()" style="margin-top: 10px;">
+        <i class="fa-solid fa-play"></i> تجربة الصوت الآن 🔊
+      </button>
+
+      <button class="btn btn-success" onclick="saveSettingsToBackend()" style="margin-top: 10px; margin-right: 10px;">
+        <i class="fa-solid fa-floppy-disk"></i> حفظ الإعدادات في قاعدة البيانات
+      </button>
+    </div>
+
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('settings');
+      A11y.init();
+
+      // Load current settings
+      const res = await HopeApi.getCustomizations(1);
+      if (res.ok && res.data) {
+        const c = res.data;
+        document.getElementById('calmModeCheck').checked = !!c.sensory_calm_mode;
+        document.getElementById('dyslexiaCheck').checked = !!c.dyslexia_font;
+        document.getElementById('contrastCheck').checked = !!c.high_contrast;
+        document.getElementById('darkModeCheck').checked = !!c.dark_mode;
+        if (c.audio_rate) {
+          document.getElementById('speechRateRange').value = c.audio_rate;
+          document.getElementById('rateValText').innerText = `${c.audio_rate}x`;
+        }
+      }
+    });
+
+    function toggleSetting(type) {
+      if (type === 'calm') {
+        document.body.classList.toggle('sensory-calm');
+      } else if (type === 'dyslexia') {
+        A11y.toggleDyslexiaFont();
+      } else if (type === 'contrast') {
+        A11y.toggleContrast();
+      } else if (type === 'dark') {
+        A11y.toggleDarkMode();
+      }
+      AppCore.playSound('click');
+    }
+
+    function updateSpeechDemo() {
+      const rate = document.getElementById('speechRateRange').value;
+      document.getElementById('rateValText').innerText = `${rate}x`;
+      SpeechEngine.setRate(parseFloat(rate));
+    }
+
+    function testVoice() {
+      const rate = parseFloat(document.getElementById('speechRateRange').value);
+      SpeechEngine.setRate(rate);
+      SpeechEngine.speak('مرحبًا بك في بصمة أمل! كل طفل لديه قدرة تستحق أن تكتشف.');
+      AppCore.playSound('star');
+    }
+
+    async function saveSettingsToBackend() {
+      const payload = {
+        child_id: 1,
+        sensory_calm_mode: document.getElementById('calmModeCheck').checked,
+        dyslexia_font: document.getElementById('dyslexiaCheck').checked,
+        high_contrast: document.getElementById('contrastCheck').checked,
+        dark_mode: document.getElementById('darkModeCheck').checked,
+        audio_rate: parseFloat(document.getElementById('speechRateRange').value),
+        font_size: 18,
+        sound_effects: true
+      };
+
+      const res = await HopeApi.saveCustomizations(payload);
+      if (res.ok) {
+        AppCore.celebrate();
+        AppCore.playSound('celebrate');
+        alert('تم حفظ إعدادات البيئة الحسية بنجاح في قاعدة البيانات.');
+      }
+    }
+  </script>
+</body>
+</html>
+

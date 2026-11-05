@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="max-width: 580px; margin-top: 40px; margin-bottom: 60px;">
+    <div class="interactive-card text-center" style="padding: 35px 25px;">
+      <div style="font-size: 50px; margin-bottom: 10px;">🔐</div>
+      <h1 style="font-size: 1.8rem; margin-bottom: 6px; color: var(--primary);">تسجيل الدخول</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px;">
+        أهلاً بكم في منصة بصمة أمل. يرجى إدخال بيانات حسابك للدخول.
+      </p>
+
+      <div id="loginAlert" style="display: none; padding: 12px; border-radius: 12px; margin-bottom: 20px; font-weight: bold;"></div>
+
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+        <div class="form-group text-right">
+          <label><i class="fa-solid fa-user"></i> اسم المستخدم أو البريد الإلكتروني</label>
+          <input type="text" id="username" class="form-control" placeholder="مثال: teacher_sarah أو admin" required autofocus>
+        </div>
+
+        <div class="form-group text-right">
+          <label><i class="fa-solid fa-lock"></i> كلمة المرور</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn btn-lg btn-primary" style="width: 100%; margin-top: 10px;">
+          <i class="fa-solid fa-right-to-bracket"></i> دخول إلى الحساب
+        </button>
+      </form>
+
+      <div style="margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+        <span style="color: var(--text-muted); font-size: 0.95rem;">ليس لديك حساب حتى الآن؟</span>
+        <a href="register.html" style="color: var(--primary); font-weight: 800; text-decoration: none; margin-right: 5px;">
+          إنشاء حساب جديد <i class="fa-solid fa-arrow-left"></i>
+        </a>
+      </div>
+
+      <!-- حسابات تجريبية سريعة بنقرة واحدة -->
+      <div style="margin-top: 25px; background: #f8fafc; border: 1.5px dashed #cbd5e1; border-radius: 16px; padding: 15px; text-align: right;">
+        <h4 style="margin: 0 0 10px 0; font-size: 0.95rem; color: #475569;">
+          <i class="fa-solid fa-bolt" style="color: var(--sunny-yellow);"></i> تجربة سريعة بنقرة واحدة:
+        </h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="quickFill('admin', 'admin123')">
+            👑 المدير (Admin)
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="quickFill('teacher_sarah', 'teacher123')">
+            👩‍🏫 المعلمة سارة (Teacher)
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="quickFill('parent_khalid', 'parent123')">
+            👨‍👩‍👧 ولي الأمر خالد (Parent)
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="quickFill('child_omar', 'child123')">
+            🧩 الطفل عمر (طيف توحد)
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="quickFill('child_nour', 'child123')">
+            🌟 الطفلة نور (متلازمة داون)
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      HopeApi.renderHeader('login');
+      A11y.init();
+    });
+
+    function quickFill(user, pass) {
+      document.getElementById('username').value = user;
+      document.getElementById('password').value = pass;
+      AppCore.playSound('click');
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value;
+      const alertBox = document.getElementById('loginAlert');
+      const submitBtn = document.getElementById('submitBtn');
+
+      alertBox.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحقق...';
+
+      const res = await HopeApi.login(u, p);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> دخول إلى الحساب';
+
+      if (!res.ok) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#fee2e2';
+        alertBox.style.color = '#991b1b';
+        alertBox.innerText = res.data.error || 'فشل تسجيل الدخول';
+        AppCore.playSound('boing');
+        return;
+      }
+
+      AppCore.playSound('celebrate');
+      alertBox.style.display = 'block';
+      alertBox.style.background = '#dcfce7';
+      alertBox.style.color = '#166534';
+      alertBox.innerText = `مرحبًا بك ${res.data.session.fullName}! جاري تحويلك...`;
+
+      setTimeout(() => {
+        const role = res.data.session.role;
+        if (role === 'admin') window.location.href = 'admin-dashboard.html';
+        else if (role === 'teacher') window.location.href = 'teacher-dashboard.html';
+        else if (role === 'parent') window.location.href = 'parent-dashboard.html';
+        else window.location.href = 'child-zone.html';
+      }, 700);
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم المعلم والأخصائي | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-chalkboard-user"></i> لوحة الأخصائي والمعلم
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;" id="welcomeTeacher">
+          مرحبًا بك! إدارة الجلسات الفردية، تقييم المهارات، وتتبع الأهداف التربوية.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="assessment.html" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-clipboard-check"></i> تقييم جديد</a>
+        <a href="iep.html" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-bullseye"></i> الخطط الفردية IEP</a>
+        <a href="sessions.html" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-calendar-plus"></i> تسجيل جلسة</a>
+        <a href="home-activities.html" class="btn btn-sm btn-primary"><i class="fa-solid fa-paper-plane"></i> إرسال نشاط منزلي</a>
+      </div>
+    </div>
+
+    <!-- بطاقات الأطفال المسندين للمعلم -->
+    <section style="margin-bottom: 30px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h2 style="font-size: 1.3rem; margin: 0;"><i class="fa-solid fa-children"></i> قائمة الأطفال في مجموعتك التأهيلية</h2>
+        <a href="children-profiles.html" class="btn btn-sm btn-outline-secondary">عرض كل الملفات <i class="fa-solid fa-arrow-left"></i></a>
+      </div>
+
+      <div class="row" id="childrenCardsRow" style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+    <!-- نظرة عامة على الخطط الفردية IEP والأهداف الجارية -->
+    <section class="data-table-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.25rem;"><i class="fa-solid fa-list-check"></i> الأهداف التعليمية الجارية (Active Goals)</h3>
+        <a href="iep.html" class="btn btn-sm btn-outline-primary">إدارة الخطط كاملة</a>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>الطفل</th>
+            <th>الهدف التربوي الذكي</th>
+            <th>المعيار المطلوب</th>
+            <th>نسبة الإنجاز</th>
+            <th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody id="goalsTableBody">
+          <tr><td colspan="5" class="text-center">جاري تحميل الأهداف...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- جدول الجلسات القادمة واليومية -->
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <div class="data-table-container" style="flex: 1; min-width: 320px;">
+        <h3 style="font-size: 1.2rem; margin-top: 0;"><i class="fa-solid fa-clock"></i> الجلسات التدريبية الأخيرة</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>الطفل</th>
+              <th>الهدف الأساسي</th>
+              <th>الحالة</th>
+            </tr>
+          </thead>
+          <tbody id="sessionsTableBody">
+            <tr><td colspan="4" class="text-center">تحميل الجلسات...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- آخر ملاحظات المعلم -->
+      <div class="interactive-card" style="flex: 1; min-width: 320px; text-align: right;">
+        <h3 style="font-size: 1.2rem; margin-top: 0; color: var(--primary);"><i class="fa-solid fa-comment-medical"></i> تسجيل ملاحظة سريعة</h3>
+        <form onsubmit="handleQuickNote(event)">
+          <div class="form-group">
+            <label>اختر الطفل</label>
+            <select id="quickNoteChild" class="form-control" required>
+              <option value="1">عمر خالد (طيف توحد)</option>
+              <option value="2">نور سالم (متلازمة داون)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>نوع الملاحظة</label>
+            <select id="quickNoteType" class="form-control">
+              <option value="behavioral">سلوكية واستجابة</option>
+              <option value="sensory">حسية وتنظيم</option>
+              <option value="academic">تعليمية وإنجاز</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>نص الملاحظة</label>
+            <textarea id="quickNoteText" class="form-control" rows="3" placeholder="اكتب ملاحظتك المهنية هنا..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <i class="fa-solid fa-floppy-disk"></i> حفظ الملاحظة في ملف الطفل
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('dashboard-teacher');
+      A11y.init();
+
+      const session = HopeApi.getCurrentSession();
+      if (!session || (session.role !== 'teacher' && session.role !== 'admin')) {
+        alert('هذه الصفحة مخصصة للمعلمين والأخصائيين. يرجى تسجيل الدخول بحساب المعلم.');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      if (session.fullName) {
+        document.getElementById('welcomeTeacher').innerText = `أهلاً بك أ. ${session.fullName}! إليك ملخص الأطفال المسندين إليك اليوم.`;
+      }
+
+      await loadTeacherData();
+    });
+
+    async function loadTeacherData() {
+      // 1. Children
+      const childrenRes = await HopeApi.getChildren();
+      const childrenRow = document.getElementById('childrenCardsRow');
+      if (childrenRes.ok && childrenRes.data.length > 0) {
+        childrenRow.innerHTML = childrenRes.data.map(c => `
+          <div class="interactive-card" style="flex:1; min-width:280px; text-align:right; border-top: 5px solid ${c.disability_code === 'autism' ? '#2563eb' : '#d97706'};">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <span style="font-size:38px;">${c.gender === 'أنثى' ? '👧' : '👦'}</span>
+              <span class="badge-status ${c.disability_code === 'autism' ? 'active' : 'assigned'}">
+                ${c.disability_code === 'autism' ? '🧩 طيف التوحد' : '🌟 متلازمة داون'}
+              </span>
+            </div>
+            <h3 style="margin: 8px 0 4px 0; font-size:1.25rem;">${c.full_name}</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin:0 0 10px 0;">
+              العمر: <strong>${c.age} سنوات</strong> | المستوى الحالي: <strong>مستوى ${c.current_level}</strong>
+            </p>
+            <p style="font-size:0.85rem; color:#475569; background:#f8fafc; padding:8px; border-radius:10px;">
+              <strong>الملف الحسي:</strong> ${c.sensory_profile}
+            </p>
+            <div style="display:flex; gap:8px; margin-top:12px;">
+              <a href="learning-journey.html?child_id=${c.id}" class="btn btn-sm btn-outline-primary" style="flex:1; text-align:center;">خريطة التقدم</a>
+              <a href="iep.html?child_id=${c.id}" class="btn btn-sm btn-primary" style="flex:1; text-align:center;">الخطة IEP</a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 2. Goals
+      const goalsRes = await HopeApi.getGoals();
+      const goalsTbody = document.getElementById('goalsTableBody');
+      if (goalsRes.ok && goalsRes.data.length > 0) {
+        goalsTbody.innerHTML = goalsRes.data.map(g => `
+          <tr>
+            <td><strong>${g.iep_id === 1 ? 'عمر خالد' : 'نور سالم'}</strong></td>
+            <td>${g.goal_text}</td>
+            <td><code>${g.criteria}</code></td>
+            <td>
+              <div style="background:#e2e8f0; border-radius:999px; height:10px; width:120px; overflow:hidden;">
+                <div style="background:var(--primary); height:100%; width:${g.progress_percentage || 50}%;"></div>
+              </div>
+              <span style="font-size:0.8rem; font-weight:bold;">${g.progress_percentage || 50}%</span>
+            </td>
+            <td><span class="badge-status ${g.status === 'achieved' ? 'achieved' : 'in_progress'}">${g.status === 'achieved' ? 'تم الإنجاز 🎉' : 'قيد التدريب 🔄'}</span></td>
+          </tr>
+        `).join('');
+      }
+
+      // 3. Sessions
+      const sessionsRes = await HopeApi.getSessions();
+      const sessTbody = document.getElementById('sessionsTableBody');
+      if (sessionsRes.ok && sessionsRes.data.length > 0) {
+        sessTbody.innerHTML = sessionsRes.data.map(s => `
+          <tr>
+            <td>${s.session_date}</td>
+            <td><strong>${s.child_id === 1 ? 'عمر خالد' : 'نور سالم'}</strong></td>
+            <td>${s.objectives}</td>
+            <td><span class="badge-status ${s.status === 'completed' ? 'completed' : 'pending'}">${s.status === 'completed' ? 'مكتملة' : 'مجدولة'}</span></td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    async function handleQuickNote(e) {
+      e.preventDefault();
+      const childId = Number(document.getElementById('quickNoteChild').value);
+      const noteType = document.getElementById('quickNoteType').value;
+      const noteText = document.getElementById('quickNoteText').value.trim();
+
+      const res = await HopeApi.createNote({
+        child_id: childId,
+        note_type: noteType,
+        note_text: noteText
+      });
+
+      if (res.ok) {
+        AppCore.playSound('celebrate');
+        alert('تم حفظ الملاحظة بنجاح في ملف الطفل.');
+        document.getElementById('quickNoteText').value = '';
+      } else {
+        alert(res.data.error || 'حدث خطأ أثناء حفظ الملاحظة');
+      }
+    }
+  </script>
+</body>
+</html>
+

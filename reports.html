@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التقارير ومتابعة التقدم | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+  <style>
+    @media print {
+      header, .no-print { display: none !important; }
+      body { background: #ffffff !important; }
+      .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+      .printable-report { box-shadow: none !important; border: 1px solid #ccc !important; }
+    }
+  </style>
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+    
+    <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-chart-line"></i> التقارير التأهيلية ومتابعة التقدم
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;">
+          تقارير دورية شاملة توضح نسب إنجاز الأهداف، الاستجابة السلوكية، ومعدلات الحضور.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-primary" onclick="window.print()">
+          <i class="fa-solid fa-print"></i> طباعة التقرير الرسمي 🖨️
+        </button>
+      </div>
+    </div>
+
+    <!-- التقرير الرسمي القابل للطباعة والمعاينة -->
+    <section class="interactive-card printable-report" style="padding: 35px; background: #ffffff; border-radius: 24px; text-align: right;">
+      
+      <!-- ترويسة التقرير الرسمية -->
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+        <div>
+          <h2 style="margin: 0; color: var(--primary); font-size: 1.6rem;">بصمة أمل | HOPE TOUCH</h2>
+          <span style="font-size: 0.9rem; color: var(--text-muted);">منظومة التعليم والتأهيل الذكية لذوي طيف التوحد ومتلازمة داون</span>
+        </div>
+        <div style="text-align: left;">
+          <h3 style="margin: 0; font-size: 1.2rem; color: #166534;">تقرير التقدم الشهري المعتمد</h3>
+          <span style="font-size: 0.85rem; color: #64748b;">تاريخ الإصدار: 2026-11-05</span>
+        </div>
+      </div>
+
+      <!-- بيانات الطفل الأساسية -->
+      <div style="background: #f8fafc; border-radius: 16px; padding: 18px; margin-bottom: 25px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+          <div><strong>اسم الطفل:</strong> عمر خالد المنصور</div>
+          <div><strong>العمر:</strong> 5 سنوات</div>
+          <div><strong>التشخيص:</strong> اضطراب طيف التوحد (ASD)</div>
+          <div><strong>المستوى الحالي:</strong> المستوى 1 (بطاقات التواصل)</div>
+          <div><strong>الأخصائي المشرف:</strong> أ. سارة الأحمد</div>
+          <div><strong>ولي الأمر:</strong> خالد المنصور</div>
+        </div>
+      </div>
+
+      <!-- مؤشرات الأداء الرئيسية KPIs -->
+      <h3 style="font-size: 1.2rem; margin-bottom: 15px; color: var(--text-main);"><i class="fa-solid fa-gauge-simple-high"></i> مؤشرات الأداء والتحسن</h3>
+      <div class="stats-grid" style="margin-bottom: 25px;">
+        <div class="stat-card stat-mint">
+          <div class="stat-info">
+            <h3>نسبة الحضور للجلسات</h3>
+            <div class="stat-number">95%</div>
+          </div>
+          <div class="stat-icon" style="color: var(--mint-green);"><i class="fa-solid fa-calendar-check"></i></div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <h3>الأهداف المحققة</h3>
+            <div class="stat-number">1 / 2</div>
+          </div>
+          <div class="stat-icon" style="color: var(--primary);"><i class="fa-solid fa-circle-check"></i></div>
+        </div>
+
+        <div class="stat-card stat-purple">
+          <div class="stat-info">
+            <h3>المحاولات التفاعلية</h3>
+            <div class="stat-number">42</div>
+          </div>
+          <div class="stat-icon" style="color: var(--playful-purple);"><i class="fa-solid fa-gamepad"></i></div>
+        </div>
+
+        <div class="stat-card stat-orange">
+          <div class="stat-info">
+            <h3>معدل دقة الاستجابة</h3>
+            <div class="stat-number">78%</div>
+          </div>
+          <div class="stat-icon" style="color: var(--accent-orange);"><i class="fa-solid fa-bullseye"></i></div>
+        </div>
+      </div>
+
+      <!-- الملاحظات الإكلينيكية والتربوية -->
+      <div style="margin-bottom: 25px;">
+        <h3 style="font-size: 1.2rem; color: var(--text-main);"><i class="fa-solid fa-notes-medical"></i> الملاحظات الإكلينيكية وخلاصة التطور</h3>
+        <p style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 14px; color: #166534; line-height: 1.7; font-size: 0.95rem;">
+          أظهر الطفل عمر تحسنًا ملحوظًا في المبادأة بالتواصل البصري عند استخدام بطاقات PECS لطلب الاحتياجات الأساسية (الماء والطعام). انخفضت نوبات التوتر الحسي بنسبة 60% بعد الالتزام ببيئة الهدوء الحسي قبل بدء التدريب اليومي. يُوصى بالاستمرار في نفس وتيرة تدريب الأسرة في المنزل لنقل المهارة إلى بيئات متعددة.
+        </p>
+      </div>
+
+      <!-- توقيع المعلم والإدارة -->
+      <div style="display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid #cbd5e1; text-align: center;">
+        <div>
+          <p style="margin: 0; font-weight: bold;">أخصائي التربية الخاصة</p>
+          <p style="margin: 4px 0 0 0; color: #64748b;">أ. سارة الأحمد</p>
+          <div style="margin-top: 10px; font-style: italic; color: var(--primary);">معتمد إلكترونيًا ✔️</div>
+        </div>
+
+        <div>
+          <p style="margin: 0; font-weight: bold;">مدير المركز التأهيلي</p>
+          <p style="margin: 4px 0 0 0; color: #64748b;">د. عبد الله الشمري</p>
+          <div style="margin-top: 10px; font-style: italic; color: var(--primary);">معتمد إلكترونيًا ✔️</div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      HopeApi.renderHeader('reports');
+      A11y.init();
+    });
+  </script>
+</body>
+</html>
+

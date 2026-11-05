@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
+  <title>منطقة المعلم وولي الأمر | مركز الريفريش والتهيئة (أطفال 3-6 سنوات)</title>
+
+  <!-- Google Fonts: Cairo & Tajawal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+</head>
+
+<body>
+
+  <!-- الترويسة الموحدة -->
+  <header>
+    <a href="index.html" class="logo-wrapper" aria-label="العودة للرئيسية">
+      <div class="logo">
+        معًا <span class="balloon">🎈</span>
+      </div>
+      <span class="logo-badge" style="background:#fef3c7; color:#b45309;">منطقة المعلم وولي الأمر 👨‍🏫</span>
+    </a>
+
+    <nav aria-label="شريط التنقل">
+      <a href="index.html"><i class="fa-solid fa-house"></i> شاشة الطفل الرئيسية 🎈</a>
+      <a href="autism.html"><i class="fa-solid fa-puzzle-piece"></i> قسم التوحد</a>
+      <a href="down.html"><i class="fa-solid fa-star"></i> قسم داون</a>
+      <a href="#resetSec" class="active"><i class="fa-solid fa-rotate-left"></i> إعادة الضبط</a>
+      <a href="#profilesSec"><i class="fa-solid fa-user-gear"></i> بروفايلات الأطفال</a>
+    </nav>
+  </header>
+
+  <!-- القسم الترحيبي الخاص بولي الأمر والمعلم -->
+  <section class="hero animate-fade" style="background:linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);">
+    <div class="hero-tag">
+      <i class="fa-solid fa-user-shield"></i> لوحة إدارة وتهيئة جلسات الأطفال (عمر 3 إلى 6 سنوات)
+    </div>
+    <h1>لوحة المعلم وولي الأمر — <span class="highlight">مركز الريفريش</span> ⚙️</h1>
+    <p>
+      أهلاً بك! من هنا يمكنك تصفير أنشطة الطفل للبدء في جلسة تعليمية جديدة، أو فحص نطق الصوتيات، أو تفعيل بروفايل مخصص
+      لطيف التوحد أو متلازمة داون.
+    </p>
+    <div class="buttons" style="justify-content:center;">
+      <a href="index.html" class="btn btn-primary btn-lg" style="background:#10b981;">
+        <i class="fa-solid fa-gamepad"></i> العودة لشاشة الطفل واللعب 🎈
+      </a>
+      <button class="btn btn-danger btn-lg" onclick="RefreshHub.fullReset()">
+        <i class="fa-solid fa-rotate-left"></i> تصفير الجلسة لطالب جديد (Full Reset)
+      </button>
+    </div>
+  </section>
+
+  <!-- المحتوى الرئيسي للمربين -->
+  <main class="container">
+
+    <!-- 1. إعادة التعيين والريفريش الذكي -->
+    <section class="panel animate-fade" id="resetSec">
+      <div class="panel-header">
+        <h2><i class="fa-solid fa-rotate-left" style="color:var(--candy-pink);"></i> ⚡ إعادة التعيين والريفريش لجلسة طفل
+          جديد</h2>
+        <span class="status-badge" style="background:#fee2e2; color:#b91c1c; font-size:0.95rem;">
+          <i class="fa-solid fa-triangle-exclamation"></i> إفراغ البيانات المخزنة
+        </span>
+      </div>
+      <p style="color:var(--text-muted); font-size:1.1rem; font-weight:700;">
+        عند انتهاء جلسة طفل والبدء مع طفل آخر بعمر 3-6 سنوات، اضغط هنا لمسح علامات الإنجاز والدرجات واستعادة الوضع
+        الافتراضي النظيف:
+      </p>
+
+      <div class="buttons">
+        <button class="btn btn-danger btn-lg" onclick="RefreshHub.fullReset()">
+          <i class="fa-solid fa-trash-can"></i> تصفير كافة الأنشطة والبدء مع طفل جديد
+        </button>
+        <button class="btn btn-secondary btn-lg" onclick="A11y.resetSettings()">
+          <i class="fa-solid fa-sliders"></i> استعادة إعدادات الخط والوصول الافتراضية
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. بروفايلات الأطفال المخصصة (3-6 سنوات) -->
+    <section class="panel animate-fade" id="profilesSec">
+      <div class="panel-header">
+        <h2><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--primary);"></i> 🎯 بروفايلات الوصول الذكية
+          للأطفال (Instant Profiles)</h2>
+        <span class="status-badge"><i class="fa-solid fa-bolt"></i> تفعيل فوري بنقرة واحدة</span>
+      </div>
+      <p style="color:var(--text-muted); font-size:1.1rem; font-weight:700;">
+        اختر البروفايل الملائم لنوع نشاط الطفل الحالي:
+      </p>
+
+      <div class="kids-sections-grid">
+        <!-- بروفايل التوحد -->
+        <div class="interactive-card" tabindex="0" onclick="RefreshHub.applyProfile('autism')" style="padding:28px;">
+          <span class="emoji" style="font-size:55px;">🧩</span>
+          <h3 style="font-size:1.45rem;">بروفايل طيف التوحد (3-6 سنوات)</h3>
+          <p style="font-size:1.05rem;">بيئة هادئة ومريحة، خط عسر القراءة المريح، ونطق صوتي هادئ وبطيء (0.75x) لمنع
+            التشتت الحسي.</p>
+          <span class="btn btn-primary" style="margin-top:12px;">تفعيل بروفايل التوحد</span>
+        </div>
+
+        <!-- بروفايل متلازمة داون -->
+        <div class="interactive-card" tabindex="0" onclick="RefreshHub.applyProfile('down')"
+          style="padding:28px; border-color:#fde047;">
+          <span class="emoji" style="font-size:55px;">🌟</span>
+          <h3 style="font-size:1.45rem;">بروفايل متلازمة داون (3-6 سنوات)</h3>
+          <p style="font-size:1.05rem;">أزرار عملاقة، خط كبير وواضح (20px)، ألوان زاهية ومحفزة، ونطق صوتي مشجع ومكرر
+            (0.80x).</p>
+          <span class="btn btn-primary" style="margin-top:12px; background:#eab308; color:#854d0e;">تفعيل بروفايل
+            داون</span>
+        </div>
+
+        <!-- البروفايل القياسي -->
+        <div class="interactive-card" tabindex="0" onclick="RefreshHub.applyProfile('default')" style="padding:28px;">
+          <span class="emoji" style="font-size:55px;">✨</span>
+          <h3 style="font-size:1.45rem;">البروفايل القياسي للأطفال</h3>
+          <p style="font-size:1.05rem;">استعادة الوضع الطبيعي المبهج لجميع الأطفال الصغار.</p>
+          <span class="btn btn-secondary" style="margin-top:12px;">استعادة القياسي</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. تشخيص الصوتيات لجهاز العرض أو التابلت -->
+    <section class="panel animate-fade" id="voiceDiagSec">
+      <div class="panel-header">
+        <h2><i class="fa-solid fa-stethoscope" style="color:var(--primary);"></i> 🎙️ فحص محرك الصوت الصوتي في الجهاز
+        </h2>
+        <div class="speaking-indicator">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <p style="color:var(--text-muted); font-size:1.1rem; font-weight:700;">
+        تأكد من أن جهاز التابلت أو الشاشة التفاعلية يدعم النطق الصوتي العربي للأطفال:
+      </p>
+
+      <div class="settings-box">
+        <h4 style="margin-bottom:12px; color:var(--primary);">الأصوات المكتشفة في جهازك:</h4>
+        <div id="voicesList" class="schedule-list" style="margin-bottom:20px;">
+          <p><i class="fa-solid fa-spinner fa-spin"></i> جاري فحص قائمة الأصوات...</p>
+        </div>
+
+        <div class="form-group">
+          <label for="customVoiceTest" style="font-weight:700;">جملة التجربة:</label>
+          <input type="text" id="customVoiceTest" class="accessible-input"
+            style="min-height:auto; padding:12px; font-size:1.15rem;" value="شاطر يا بطل! أحسنت صنعًا وأنا فخور بك!"
+            aria-label="نص التجربة">
+        </div>
+
+        <div class="buttons">
+          <button class="btn btn-primary btn-lg"
+            onclick="SpeechEngine.speak(document.getElementById('customVoiceTest').value)">
+            <i class="fa-solid fa-play"></i> تجربة النطق
+          </button>
+          <button class="btn btn-stop btn-lg" onclick="SpeechEngine.stop()">
+            <i class="fa-solid fa-stop"></i> إيقاف النطق
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. تجربة نغمات الأطفال التخليقية -->
+    <section class="panel animate-fade">
+      <div class="panel-header">
+        <h2><i class="fa-solid fa-music" style="color:var(--primary);"></i> 🎵 فحص نغمات وأصوات اللعب التخليقية (Web
+          Audio)</h2>
+      </div>
+
+      <div class="buttons">
+        <button class="btn btn-secondary btn-lg" onclick="AppCore.playSound('pop')">
+          <i class="fa-solid fa-circle-dot"></i> نغمة الفقاعة (Pop)
+        </button>
+        <button class="btn btn-secondary btn-lg" onclick="AppCore.playSound('boing')">
+          <i class="fa-solid fa-bounce"></i> صوت النطاط (Boing)
+        </button>
+        <button class="btn btn-primary btn-lg" style="background:#10b981;" onclick="AppCore.playSound('star')">
+          <i class="fa-solid fa-star"></i> رنين النجمة (Star Chime)
+        </button>
+        <button class="btn btn-primary btn-lg" onclick="AppCore.celebrate()">
+          <i class="fa-solid fa-party-horn"></i> احتفال البطل + كونفيتي 🌟
+        </button>
+      </div>
+    </section>
+
+    <!-- العودة المباشرة للطفل -->
+    <section class="panel animate-fade" style="text-align:center; background:#eff6ff; border-color:#bfdbfe;">
+      <h2 style="justify-content:center; margin-bottom:12px;"> جاهز للعب مع طفلك؟ 🎈</h2>
+      <p style="color:#1e40af; font-size:1.2rem; font-weight:700; margin-bottom:20px;">
+        اختر الشاشة وسينتقل الجهاز فورًا لواجهة الطفل الكبيرة والسهلة:
+      </p>
+      <div class="buttons" style="justify-content:center;">
+        <a href="autism.html" class="btn btn-primary btn-lg"><i class="fa-solid fa-puzzle-piece"></i> فتح شاشة طيف
+          التوحد (3-6)</a>
+        <a href="down.html" class="btn btn-primary btn-lg" style="background:#eab308; color:#854d0e;"><i
+            class="fa-solid fa-star"></i> فتح شاشة متلازمة داون (3-6)</a>
+        <a href="index.html" class="btn btn-secondary btn-lg"><i class="fa-solid fa-house"></i> شاشة الطفل الرئيسية</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- الفوتر الموحد -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>معًا <span class="balloon">🎈</span> عالم الأبطال الصغار</h3>
+        <p>مركز تحكم المعلمين وأولياء الأمور — مهيأ لخدمة أطفال طيف التوحد ومتلازمة داون من عمر 3 إلى 6 سنوات.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="index.html"><i class="fa-solid fa-gamepad"></i> شاشة الطفل الرئيسية 🎈</a></li>
+          <li><a href="autism.html"><i class="fa-solid fa-puzzle-piece"></i> ألعاب طيف التوحد 🧩</a></li>
+          <li><a href="down.html"><i class="fa-solid fa-star"></i> ألعاب متلازمة داون 🌟</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>إجراءات الإدارة</h4>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="RefreshHub.fullReset()"><i class="fa-solid fa-rotate-left"></i>
+              تصفير الجلسة لطالب جديد</a></li>
+          <li><a href="javascript:void(0)" onclick="RefreshHub.applyProfile('autism')"><i
+                class="fa-solid fa-puzzle-piece"></i> بروفايل التوحد (3-6)</a></li>
+          <li><a href="javascript:void(0)" onclick="RefreshHub.applyProfile('down')"><i class="fa-solid fa-star"></i>
+              بروفايل داون (3-6)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>معًا - عالم الأبطال الصغار © 2026 | أطفالنا هم سر البهجة والأمل 💛💙</p>
+      <p><i class="fa-solid fa-heart" style="color:#ef4444;"></i> صُنعت بحب لأبطالنا الصغار (3-6 سنوات)</p>
+    </div>
+  </footer>
+
+  <!-- المكتبات الخارجية -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- ملفات الجافاسكريبت المعيارية -->
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script src="assets/js/refresh.js"></script>
+
+</body>
+
+</html>

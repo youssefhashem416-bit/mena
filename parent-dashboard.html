@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بوابة ولي الأمر | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-house-user"></i> بوابة الأسرة وولي الأمر
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;" id="welcomeParent">
+          مرحبًا بك! شراكتنا مع الأسرة هي الركيزة الأساسية لتطور بطلنا.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <a href="child-zone.html" class="btn btn-sm btn-primary">
+          <i class="fa-solid fa-gamepad"></i> فتح واجهة الطفل للعب والتعلم 🎈
+        </a>
+      </div>
+    </div>
+
+    <!-- بطاقة الطفل والإنجازات الحالية -->
+    <section class="interactive-card" id="childOverviewCard" style="margin-bottom: 25px; text-align: right; background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <span style="font-size: 55px;" id="childAvatarEmoji">👦</span>
+          <div>
+            <h2 style="margin: 0; font-size: 1.5rem;" id="childNameText">عمر خالد المنصور</h2>
+            <p style="margin: 4px 0 0 0; color: var(--text-muted);" id="childMetaText">
+              العمر: 5 سنوات | الفئة: طيف التوحد (المستوى 1)
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <div style="background: #ffffff; padding: 10px 18px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center;">
+            <div style="font-size: 1.3rem; font-weight: 900; color: #f59e0b;" id="childStarsCount">90 ⭐</div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">النجوم المكتسبة</span>
+          </div>
+
+          <a href="learning-journey.html" class="btn btn-outline-primary btn-sm">
+            <i class="fa-solid fa-route"></i> رحلة التطور
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- الأنشطة المنزلية المطلوبة من المعلم -->
+    <section class="data-table-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.25rem;"><i class="fa-solid fa-list-check"></i> الأنشطة المنزلية بتوجيه المعلم</h3>
+        <span class="badge-status in_progress">تطبيق منزلي مدعوم</span>
+      </div>
+
+      <div id="homeActivitiesList" style="display: flex; flex-direction: column; gap: 14px;">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+    <!-- ملاحظات المعلم اليومية للأسرة -->
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <div class="interactive-card" style="flex: 1; min-width: 320px; text-align: right;">
+        <h3 style="font-size: 1.2rem; margin-top: 0; color: var(--primary);"><i class="fa-solid fa-bell"></i> ملاحظات المعلمة وتوجيهاتها</h3>
+        <div id="teacherNotesList" style="display: flex; flex-direction: column; gap: 10px;">
+          <!-- Notes filled by JS -->
+        </div>
+      </div>
+
+      <!-- إرسال استفسار أو ملاحظة للمعلم -->
+      <div class="interactive-card" style="flex: 1; min-width: 320px; text-align: right;">
+        <h3 style="font-size: 1.2rem; margin-top: 0; color: var(--mint-green);"><i class="fa-solid fa-envelope"></i> رسالة إلى المعلم المسؤول</h3>
+        <form onsubmit="handleSendParentNote(event)">
+          <div class="form-group">
+            <label>ملاحظة حول أداء الطفل في المنزل</label>
+            <textarea id="parentFeedbackText" class="form-control" rows="4" placeholder="اكتب كيف كان تفاعل طفلك اليوم في البيت، أو أي استفسار لمعلم التربية الخاصة..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <i class="fa-solid fa-paper-plane"></i> إرسال الملاحظة للمعلم
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('dashboard-parent');
+      A11y.init();
+
+      const session = HopeApi.getCurrentSession();
+      if (!session || (session.role !== 'parent' && session.role !== 'admin')) {
+        alert('هذه الصفحة مخصصة لأولياء الأمور. يرجى تسجيل الدخول بحساب ولي الأمر.');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      if (session.fullName) {
+        document.getElementById('welcomeParent').innerText = `أهلاً بك يا أستاذ ${session.fullName}! هنا يمكنك متابعة تطور طفلك لحظة بلحظة.`;
+      }
+
+      await loadParentData();
+    });
+
+    async function loadParentData() {
+      // 1. Home Activities
+      const homeRes = await HopeApi.getHomeActivities(1);
+      const listEl = document.getElementById('homeActivitiesList');
+      if (homeRes.ok && homeRes.data.length > 0) {
+        listEl.innerHTML = homeRes.data.map(act => `
+          <div style="background:#f8fafc; border:1.5px solid ${act.status === 'completed' ? '#bbf7d0' : '#fed7aa'}; border-radius:16px; padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <h4 style="margin:0; font-size:1.1rem; color:var(--text-main);">
+                <i class="fa-solid ${act.status === 'completed' ? 'fa-circle-check' : 'fa-clock'}" style="color:${act.status === 'completed' ? '#16a34a' : '#ea580c'}; margin-left:6px;"></i>
+                ${act.title}
+              </h4>
+              <span class="badge-status ${act.status === 'completed' ? 'completed' : 'in_progress'}">
+                ${act.status === 'completed' ? 'تم الإنجاز في المنزل بنجاح ✅' : 'مطلوب إنجازه مع الطفل ⏳'}
+              </span>
+            </div>
+            <p style="margin:8px 0; font-size:0.95rem; color:var(--text-muted); line-height:1.5;">${act.instructions}</p>
+            ${act.parent_feedback ? `<p style="font-size:0.85rem; background:#ffffff; padding:6px 10px; border-radius:8px; color:#166534; margin:4px 0 0 0;"><strong>تعليق الأسرة:</strong> ${act.parent_feedback}</p>` : ''}
+            
+            ${act.status !== 'completed' ? `
+              <div style="margin-top:10px;">
+                <button class="btn btn-sm btn-primary" onclick="markActivityDone(${act.id})">
+                  <i class="fa-solid fa-check"></i> تم إنجاز النشاط اليوم مع الطفل
+                </button>
+              </div>
+            ` : ''}
+          </div>
+        `).join('');
+      }
+
+      // 2. Notes
+      const notesRes = await HopeApi.getNotes(1);
+      const notesEl = document.getElementById('teacherNotesList');
+      if (notesRes.ok && notesRes.data.length > 0) {
+        notesEl.innerHTML = notesRes.data.map(n => `
+          <div style="background:#f8fafc; border-right:4px solid var(--primary); padding:10px 14px; border-radius:10px;">
+            <span style="font-size:0.8rem; color:#64748b;">${new Date(n.created_at).toLocaleDateString('ar-SA')} - ${n.note_type === 'behavioral' ? 'سلوكية' : 'تنظيم حسي'}</span>
+            <p style="margin:4px 0 0 0; font-size:0.95rem;">${n.note_text}</p>
+          </div>
+        `).join('');
+      }
+    }
+
+    async function markActivityDone(actId) {
+      const feedback = prompt('ما رأيك في استجابة الطفل للنشاط؟ (اختياري)');
+      const res = await HopeApi.updateHomeActivity(actId, {
+        status: 'completed',
+        parent_feedback: feedback || 'تم التطبيق بنجاح في المنزل',
+        completed_at: new Date().toISOString()
+      });
+      if (res.ok) {
+        AppCore.celebrate();
+        alert('رائع! تم تسجيل إنجاز النشاط المنزلي وسيصل إلى المعلم فورًا.');
+        loadParentData();
+      }
+    }
+
+    async function handleSendParentNote(e) {
+      e.preventDefault();
+      const txt = document.getElementById('parentFeedbackText').value.trim();
+      const res = await HopeApi.createNote({
+        child_id: 1,
+        note_type: 'parent_message',
+        note_text: `رسالة من ولي الأمر: ${txt}`
+      });
+      if (res.ok) {
+        AppCore.playSound('celebrate');
+        alert('تم إرسال رسالتك للمعلمة بنجاح.');
+        document.getElementById('parentFeedbackText').value = '';
+      }
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الأنشطة المنزلية والمتابعة الأسرية | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-house-chimney-user"></i> الأنشطة المنزلية والشراكة الأسرية
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;">
+          مهام موجهة من معلم التربية الخاصة لتعزيز التعلم في البيئة المنزلية اليومية.
+        </p>
+      </div>
+
+      <button class="btn btn-primary" onclick="openAssignModal()">
+        <i class="fa-solid fa-plus"></i> تكليف بنشاط منزلي جديد
+      </button>
+    </div>
+
+    <!-- قائمة الأنشطة المنزلية -->
+    <div id="homeActivitiesContainer" style="display: flex; flex-direction: column; gap: 16px;">
+      <!-- Filled by JS -->
+    </div>
+
+  </main>
+
+  <!-- Modal تكليف بنشاط منزلي جديد -->
+  <div id="assignModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+    <div class="interactive-card" style="background:#ffffff; max-width:600px; width:90%; padding:25px; border-radius:24px; text-align:right;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 style="margin:0; color:var(--primary);"><i class="fa-solid fa-paper-plane"></i> إرسال نشاط منزلي للأسرة</h3>
+        <button class="btn btn-sm btn-outline-danger" onclick="closeAssignModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleCreateHomeActivity(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>اختر الطفل</label>
+            <select id="homeChildId" class="form-control" required>
+              <option value="1">عمر خالد (طيف توحد)</option>
+              <option value="2">نور سالم (متلازمة داون)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>موعد التسليم المتوقع</label>
+            <input type="date" id="homeDueDate" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>عنوان النشاط المنزلي</label>
+          <input type="text" id="homeTitle" class="form-control" placeholder="مثال: التدريب على إشارة طلب الماء بالصورة عند الغداء" required>
+        </div>
+
+        <div class="form-group">
+          <label>التعليمات والتوجيهات لولي الأمر خطوة بخطوة</label>
+          <textarea id="homeInstructions" class="form-control" rows="3" placeholder="اكتب تعليمات واضحة وبسيطة لولي الأمر، مثلاً: ضع البطاقة أمام الطفل وانتظر 3 ثوانٍ قبل تقديم المساعدة..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">
+          <i class="fa-solid fa-paper-plane"></i> إرسال التكليف إلى ولي الأمر
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('home-activities');
+      A11y.init();
+      const nextWeek = new Date();
+      nextWeek.setDate(nextWeek.getDate() + 5);
+      document.getElementById('homeDueDate').value = nextWeek.toISOString().split('T')[0];
+      await loadHomeActivities();
+    });
+
+    async function loadHomeActivities() {
+      const res = await HopeApi.getHomeActivities();
+      const container = document.getElementById('homeActivitiesContainer');
+      if (res.ok && res.data.length > 0) {
+        container.innerHTML = res.data.map(act => `
+          <div class="interactive-card text-right" style="border-right:6px solid ${act.status === 'completed' ? '#16a34a' : '#f97316'};">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+              <div>
+                <span class="badge-status ${act.child_id === 1 ? 'active' : 'assigned'}" style="margin-bottom:6px;">
+                  ${act.child_id === 1 ? '🧩 عمر خالد (توحد)' : '🌟 نور سالم (داون)'}
+                </span>
+                <h3 style="margin:4px 0 6px 0; font-size:1.2rem; color:var(--text-main);">${act.title}</h3>
+                <span style="font-size:0.85rem; color:#64748b;">تاريخ الاستحقاق: ${act.due_date}</span>
+              </div>
+              <span class="badge-status ${act.status === 'completed' ? 'completed' : 'in_progress'}">
+                ${act.status === 'completed' ? 'تم الإنجاز في المنزل ✅' : 'قيد التطبيق ⏳'}
+              </span>
+            </div>
+
+            <p style="margin:12px 0; color:var(--text-muted); font-size:0.95rem; line-height:1.6;">
+              ${act.instructions}
+            </p>
+
+            ${act.parent_feedback ? `
+              <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:10px 14px; border-radius:12px; margin-top:8px;">
+                <strong style="color:#166534;"><i class="fa-solid fa-comment-dots"></i> ملاحظات ولي الأمر:</strong>
+                <p style="margin:4px 0 0 0; color:#14532d; font-size:0.9rem;">${act.parent_feedback}</p>
+              </div>
+            ` : ''}
+
+            ${act.status !== 'completed' ? `
+              <div style="margin-top:14px;">
+                <button class="btn btn-sm btn-outline-success" onclick="completeActivity(${act.id})">
+                  <i class="fa-solid fa-check"></i> تسجيل إكمال النشاط من ولي الأمر
+                </button>
+              </div>
+            ` : ''}
+          </div>
+        `).join('');
+      } else {
+        container.innerHTML = '<div class="text-center" style="padding:40px; color:#64748b;">لا توجد أنشطة منزلية مسجلة</div>';
+      }
+    }
+
+    function openAssignModal() {
+      document.getElementById('assignModal').style.display = 'flex';
+    }
+
+    function closeAssignModal() {
+      document.getElementById('assignModal').style.display = 'none';
+    }
+
+    async function handleCreateHomeActivity(e) {
+      e.preventDefault();
+      const payload = {
+        child_id: Number(document.getElementById('homeChildId').value),
+        title: document.getElementById('homeTitle').value.trim(),
+        instructions: document.getElementById('homeInstructions').value.trim(),
+        due_date: document.getElementById('homeDueDate').value,
+        parent_id: 1
+      };
+
+      const res = await HopeApi.createHomeActivity(payload);
+      if (res.ok) {
+        AppCore.celebrate();
+        alert('تم إرسال التكليف المنزلي بنجاح.');
+        closeAssignModal();
+        await loadHomeActivities();
+      } else {
+        alert(res.data.error || 'فشل إرسال النشاط');
+      }
+    }
+
+    async function completeActivity(id) {
+      const fb = prompt('اكتب تعليق الأسرة حول أداء الطفل:');
+      const res = await HopeApi.updateHomeActivity(id, {
+        status: 'completed',
+        parent_feedback: fb || 'تم التطبيق بنجاح',
+        completed_at: new Date().toISOString()
+      });
+      if (res.ok) {
+        AppCore.celebrate();
+        alert('تم تحديث حالة النشاط بنجاح.');
+        await loadHomeActivities();
+      }
+    }
+  </script>
+</body>
+</html>
+

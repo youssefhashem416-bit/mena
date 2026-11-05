@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
+  <title>عالم أبطال متلازمة داون (3-12 سنة) | بصمة أمل - HOPE TOUCH</title>
+
+  <!-- Google Fonts: Cairo & Tajawal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+</head>
+
+<body>
+
+  <!-- الترويسة الموحدة -->
+  <header>
+    <a href="index.html" class="logo-wrapper" aria-label="العودة للرئيسية">
+      <div class="logo">
+        معًا <span class="balloon">🎈</span>
+      </div>
+      <span class="logo-badge" style="background:#fef08a; color:#854d0e;">أبطال متلازمة داون (3 - 6 سنوات) 🌟</span>
+    </a>
+
+    <nav aria-label="شريط التنقل">
+      <a href="index.html"><i class="fa-solid fa-house"></i> الرئيسية</a>
+      <a href="autism.html"><i class="fa-solid fa-puzzle-piece"></i> طيف التوحد 🧩</a>
+      <a href="#activities" class="active"><i class="fa-solid fa-star"></i> ألعابي 🌟</a>
+      <a href="refresh.html" class="parent-zone-btn"><i class="fa-solid fa-lock"></i> المعلم وولي الأمر ⚙️</a>
+    </nav>
+
+    <!-- شريط أدوات التكبير السريع -->
+    <div class="a11y-quick-bar" role="toolbar" aria-label="أدوات الوصول السريع">
+      <button class="a11y-btn" onclick="A11y.changeFont(2)" title="تكبير الخط" aria-label="تكبير حجم الخط">
+        <i class="fa-solid fa-magnifying-glass-plus"></i> A+
+      </button>
+      <button class="a11y-btn" onclick="A11y.changeFont(-2)" title="تصغير الخط" aria-label="تصغير حجم الخط">
+        <i class="fa-solid fa-magnifying-glass-minus"></i> A-
+      </button>
+      <button class="a11y-btn" data-a11y="contrast" onclick="A11y.toggleContrast()" title="التباين الفائق" aria-label="تفعيل التباين الفائق">
+        <i class="fa-solid fa-circle-half-stroke"></i>
+      </button>
+      <button class="a11y-btn" data-a11y="dark" onclick="A11y.toggleDarkMode()" title="الوضع الليلي" aria-label="تبديل الوضع الليلي">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- القسم الترحيبي للطفل -->
+  <section class="hero animate-fade">
+    <div class="hero-tag" style="background:#fef9c3; color:#854d0e; border-color:#fef08a;">
+      <i class="fa-solid fa-star" style="color:#eab308;"></i> 💛💙 أبطال الإرادة والابتسامة المشرقة
+    </div>
+    <h1>أهلاً بك في عالم <span class="highlight">متلازمة داون</span> 🌟</h1>
+    <p>
+      العب وتكلم وتعلم معنا بالصور الملونة والأصوات المحببة، أنت بطل وشاطر ونحن نحبك!
+    </p>
+
+    <!-- زر صوتي تفاعلي للطفل -->
+    <div style="margin-top: 10px;">
+      <button class="kid-welcome-btn" onclick="SpeechEngine.speak('مرحبًا بك يا بطل أبطال العالم! أنا سعيد جدًا بوجودك معي، هيا نلمس الصور وننطق الكلمات ونكسب النجوم معًا!')" aria-label="استمع لرسالة الترحيب">
+        <i class="fa-solid fa-volume-high"></i>
+        <span>اضغط هنا لتسمعني يا بطل! 🔊</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- المحتوى الرئيسي للطفل -->
+  <main class="container">
+
+    <!-- منطقة الأنشطة -->
+    <section id="activities" class="panel animate-fade">
+      <div class="panel-header">
+        <h2><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--primary);"></i> اختر لعبتك المحببة:</h2>
+        <div class="speaking-indicator" title="جاري التحدث">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <!-- تبويبات الأطفال الكبيرة -->
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" onclick="DownActivities.showTab('wordsTab', this)">
+          <i class="fa-solid fa-comments"></i> 🗣️ كلماتي الأولى
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="DownActivities.showTab('shapesTab', this)">
+          <i class="fa-solid fa-shapes"></i> 🔷 الأشكال والألوان والعد
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="DownActivities.showTab('skillsTab', this)">
+          <i class="fa-solid fa-star"></i> 🌟 مهاراتي وشطارتي
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="DownActivities.showTab('quizTab', this)">
+          <i class="fa-solid fa-gamepad"></i> 🎮 التحدي والنجوم
+        </button>
+      </div>
+
+      <!-- 1. الكلمات الأولى اللذيذة ونطق الحروف -->
+      <div id="wordsTab" class="activity-box active" role="tabpanel">
+        <h3>🗣️ كلماتي الأولى الحلوة (المس لتسمع الصوت)</h3>
+        <p style="color:var(--text-muted); font-size:1.1rem; font-weight:700;">المس الصورة لتسمع نطقها الجميل وكررها بصوتك العالي:</p>
+
+        <div class="cards-grid">
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnWord(this, 'بـابـا 👨', 'بـابـا الحبيب، أحبك يا أبي!')">
+            <span class="emoji">👨</span>
+            <h3>بابا</h3>
+            <p>أبي الحبيب ❤️</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnWord(this, 'مـامـا 👩', 'مـامـا الغالية، أحبك يا أمي الحنونة!')">
+            <span class="emoji">👩</span>
+            <h3>ماما</h3>
+            <p>أمي الحنونة ❤️</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnWord(this, 'مـاء 💧', 'مـاء بارد ونقي ومنعش!')">
+            <span class="emoji">💧</span>
+            <h3>ماء</h3>
+            <p>ماء بارد ومنعش</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnWord(this, 'تـفـاحـة 🍎', 'تـفـاحـة حمراء شهية ومقرمشة، يم يم يم!')">
+            <span class="emoji">🍎</span>
+            <h3>تفاحة</h3>
+            <p>يم يم! تفاحة لذيذة</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnWord(this, 'بـطـة 🦆', 'بـطـة تسبح في الماء وتقول: واك واك واك!')">
+            <span class="emoji">🦆</span>
+            <h3>بطة</h3>
+            <p>واك واك! 🦆</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnWord(this, 'قـطـة 🐱', 'قـطـة جميلة صغيرة تقول: مياو مياو!')">
+            <span class="emoji">🐱</span>
+            <h3>قطة</h3>
+            <p>مياو مياو! 🐱</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnWord(this, 'سـيـارة 🚗', 'سـيـارة سريعة تقول: بييب بييب!')">
+            <span class="emoji">🚗</span>
+            <h3>سيارة</h3>
+            <p>بييب بييب! 🚗</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnWord(this, 'كـرة ⚽', 'كـرة نلعب بها في الحديقة، شووت!')">
+            <span class="emoji">⚽</span>
+            <h3>كرة</h3>
+            <p>يلا نلعب كرة ⚽</p>
+          </div>
+        </div>
+
+        <div class="result-box" id="wordResult" aria-live="polite">
+          <span><i class="fa-solid fa-volume-high" style="color:var(--candy-pink); margin-left:8px;"></i> المس أي بطاقة لتنطق كلمتها فورًا!</span>
+        </div>
+
+        <div class="buttons">
+          <button class="btn btn-stop btn-lg" onclick="SpeechEngine.stop()">
+            <i class="fa-solid fa-stop"></i> إيقاف الصوت
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. الأشكال والألوان والعد المرح -->
+      <div id="shapesTab" class="activity-box" role="tabpanel">
+        <h3>🔷 الأشكال والألوان والعد المرح (1، 2، 3)</h3>
+        <p style="color:var(--text-muted); font-size:1.1rem; font-weight:700;">المس الشكل أو الرقم لتسمع اسمه ولونه الزاهي:</p>
+
+        <div class="cards-grid">
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnShape(this, 'دائرة حمراء 🔴', 'دائرة مستديرة باللون الأحمر تشبه حبة الطماطم والكرة!')">
+            <span class="emoji">🔴</span>
+            <h3>دائرة حمراء</h3>
+            <p>مستديرة كالشمس ☀️</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnShape(this, 'مربع أزرق 🟦', 'مربع له أربعة جوانب متساوية باللون الأزرق الجميل!')">
+            <span class="emoji">🟦</span>
+            <h3>مربع أزرق</h3>
+            <p>مثل الصندوق 📦</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnShape(this, 'مثلث أخضر 🔺', 'مثلث له ثلاثة أضلاع باللون الأخضر مثل شجرة العيد!')">
+            <span class="emoji">🔺</span>
+            <h3>مثلث أخضر</h3>
+            <p>مثل قبعة الحفلة 🎈</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnShape(this, 'نجمة صفراء ⭐', 'نجمة صفراء ذهبية تلمع في السماء!')">
+            <span class="emoji">⭐</span>
+            <h3>نجمة صفراء</h3>
+            <p>تلمع في السماء ✨</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnShape(this, 'قلب وردي 💖', 'قلب وردي جميل مليء بالحب والفرح!')">
+            <span class="emoji">💖</span>
+            <h3>قلب وردي</h3>
+            <p>أحبكم جميعًا ❤️</p>
+          </div>
+
+          <div class="interactive-card" tabindex="0" onclick="DownActivities.learnShape(this, 'العد المرح: 1 2 3', 'عد معي: تفاحة واحدة، تفاحتان، ثلاث تفاحات!')">
+            <span class="emoji">🍎🍏🍎</span>
+            <h3>1، 2، 3</h3>
+            <p>عد التفاحات اللذيذة</p>
+          </div>
+        </div>
+
+        <div class="result-box" id="shapeResult" aria-live="polite">
+          <span><i class="fa-solid fa-shapes" style="color:var(--candy-pink); margin-left:8px;"></i> اختر شكلاً أو رقماً لتسمع اسمه بصوت واضح!</span>
+        </div>
+
+        <div class="buttons">
+          <button class="btn btn-stop btn-lg" onclick="SpeechEngine.stop()">
+            <i class="fa-solid fa-stop"></i> إيقاف الصوت
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. المهارات اليومية والاستقلالية -->
+      <div id="skillsTab" class="activity-box" role="tabpanel">
+        <div class="panel-header" style="border:none; padding-bottom:0;">
+          <div>
+            <h3>🌟 أنا بطل نظيف وشاطر (مهاراتي اليومية)</h3>
+            <p style="color:var(--text-muted); font-size:1.1rem; font-weight:700;">المس المهارة التي قمت بها لتكسب نجمة البطل الشاطر:</p>
+          </div>
+          <button class="btn btn-secondary" onclick="DownActivities.resetSkills()">
+            <i class="fa-solid fa-rotate-left"></i> إعادة النجوم من جديد 🔄
+          </button>
+        </div>
+
+        <div class="schedule-list">
+          <div class="schedule-item skill-item" tabindex="0" role="button" aria-label="أغسل يدي بالماء والصابون">
+            <div class="schedule-title-area">
+              <span class="schedule-check-btn"><i class="fa-solid fa-check"></i></span>
+              <span class="emoji" style="font-size:45px;">🧼</span>
+              <span class="schedule-text skill-text">أغسل يدي بالماء والصابون لأكون نظيفًا</span>
+            </div>
+            <span class="schedule-time-tag" style="background:#dbeafe; color:#1e40af; font-size:1rem; font-weight:800; padding:6px 16px; border-radius:999px;">أنا نظيف 🧼</span>
+          </div>
+
+          <div class="schedule-item skill-item" tabindex="0" role="button" aria-label="أنظف أسناني بالفرشاة">
+            <div class="schedule-title-area">
+              <span class="schedule-check-btn"><i class="fa-solid fa-check"></i></span>
+              <span class="emoji" style="font-size:45px;">🪥</span>
+              <span class="schedule-text skill-text">أنظف أسناني بالفرشاة لتلمع بالبياض</span>
+            </div>
+            <span class="schedule-time-tag" style="background:#fce7f3; color:#9d174d; font-size:1rem; font-weight:800; padding:6px 16px; border-radius:999px;">ابتسامة بيضاء ✨</span>
+          </div>
+
+          <div class="schedule-item skill-item" tabindex="0" role="button" aria-label="أرتب ألعابي في مكانها">
+            <div class="schedule-title-area">
+              <span class="schedule-check-btn"><i class="fa-solid fa-check"></i></span>
+              <span class="emoji" style="font-size:45px;">🧸</span>
+              <span class="schedule-text skill-text">أرتب ألعابي في الصندوق بعد أن أنتهي من اللعب</span>
+            </div>
+            <span class="schedule-time-tag" style="background:#dbeafe; color:#1e40af; font-size:1rem; font-weight:800; padding:6px 16px; border-radius:999px;">أنا منظم 🧸</span>
+          </div>
+
+          <div class="schedule-item skill-item" tabindex="0" role="button" aria-label="أشرب الماء بانتظام">
+            <div class="schedule-title-area">
+              <span class="schedule-check-btn"><i class="fa-solid fa-check"></i></span>
+              <span class="emoji" style="font-size:45px;">💧</span>
+              <span class="schedule-text skill-text">أشرب الماء النقي لأكون قويًا ونشيطًا</span>
+            </div>
+            <span class="schedule-time-tag" style="background:#e0f2fe; color:#0369a1; font-size:1rem; font-weight:800; padding:6px 16px; border-radius:999px;">صحة وقوة 💪</span>
+          </div>
+
+          <div class="schedule-item skill-item" tabindex="0" role="button" aria-label="أبتسم وأقول شكرًا">
+            <div class="schedule-title-area">
+              <span class="schedule-check-btn"><i class="fa-solid fa-check"></i></span>
+              <span class="emoji" style="font-size:45px;">😊</span>
+              <span class="schedule-text skill-text">أبتسم دائمًا وأقول شكرًا للجميع بلطف</span>
+            </div>
+            <span class="schedule-time-tag" style="background:#fef08a; color:#854d0e; font-size:1rem; font-weight:800; padding:6px 16px; border-radius:999px;">أنا لطيف 💖</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. التحدي والمرح والاختبار التفاعلي للأطفال -->
+      <div id="quizTab" class="activity-box" role="tabpanel">
+        <h3>🎮 لعبة البطل الصغير والنجوم ⭐</h3>
+        <p style="color:var(--text-muted); font-size:1.1rem; font-weight:700;">المس الصورة الصحيحة بأصبعك واكسب النجوم والكونفيتي الملون:</p>
+
+        <div class="settings-box" style="text-align:center; padding:25px;">
+          <h4 id="quizQuestionText" style="font-size:1.6rem; color:var(--primary); margin-bottom:18px;">
+            جاري تحميل السؤال...
+          </h4>
+
+          <div id="downQuizOptions" class="buttons" style="justify-content:center; margin:25px 0;">
+            <!-- تولد بواسطة down.js -->
+          </div>
+
+          <div class="result-box" id="downQuizResult" aria-live="polite" style="justify-content:center; font-size:1.25rem;">
+            المس الصورة الصحيحة بأصبعك لتربح النجوم!
+          </div>
+
+          <div class="buttons" style="justify-content:center; margin-top:25px;">
+            <button class="btn btn-primary btn-lg" onclick="DownActivities.nextQuestion()">
+              <span>السؤال التالي 🎈</span>
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- منطقة المعلم وولي الأمر المخصصة للصوت -->
+    <details class="panel" style="background:#f8fafc; border:2px dashed #cbd5e1; cursor:pointer;">
+      <summary style="font-size:1.15rem; font-weight:800; color:#475569;">
+        ⚙️ خيارات تحكم المعلم وولي الأمر في سرعة النطق
+      </summary>
+      <div style="margin-top:15px;">
+        <label for="downSpeechRate" style="display:block; font-weight:700; margin-bottom:8px;">
+          سرعة الصوت الموصى بها لأطفال متلازمة داون (0.80x):
+          <span id="rateValue" class="rate-display">0.80</span>
+        </label>
+        <input type="range" id="downSpeechRate" class="accessible-range" min="0.60" max="1.20" step="0.05" value="0.80" oninput="SpeechEngine.setRate(this.value)" aria-label="سرعة النطق">
+        <div class="buttons" style="margin-top:12px;">
+          <button class="btn btn-primary" onclick="SpeechEngine.testVoice('أنت بطل رائع ومميز في متلازمة داون!')">تجربة الصوت</button>
+          <a href="refresh.html" class="btn btn-secondary">لوحة التحكم الكاملة (الريفريش)</a>
+        </div>
+      </div>
+    </details>
+
+  </main>
+
+  <!-- الفوتر الموحد -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>معًا <span class="balloon">🎈</span> عالم الأبطال الصغار</h3>
+        <p>قسم متلازمة داون للأطفال من 3 إلى 6 سنوات — واحة للأمل والمحبة والتشجيع الإيجابي الدائم.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>ألعاب أخرى</h4>
+        <ul>
+          <li><a href="autism.html"><i class="fa-solid fa-puzzle-piece"></i> ألعاب طيف التوحد 🧩</a></li>
+          <li><a href="index.html"><i class="fa-solid fa-house"></i> الرئيسية 🏠</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>لوحة المربين</h4>
+        <ul>
+          <li><a href="refresh.html"><i class="fa-solid fa-arrows-rotate"></i> مركز الريفريش والتهيئة</a></li>
+          <li><a href="javascript:void(0)" onclick="DownActivities.resetSkills()"><i class="fa-solid fa-rotate-left"></i> تصفير قائمة المهارات</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>معًا - عالم الأبطال الصغار © 2026 | أطفالنا هم سر البهجة والأمل 💛💙</p>
+      <p><i class="fa-solid fa-heart" style="color:#ef4444;"></i> صُنعت بحب لأبطالنا الصغار (3-6 سنوات)</p>
+    </div>
+  </footer>
+
+  <!-- المكتبات الخارجية -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- ملفات الجافاسكريبت المعيارية -->
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script src="assets/js/down.js"></script>
+
+</body>
+</html>

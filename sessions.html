@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الجلسات التأهيلية | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-clock-rotate-left"></i> إدارة وتوثيق الجلسات التأهيلية
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;">
+          توثيق حضور الأطفال، أهداف كل جلسة، ونتائج التدريب الفردي بدقة وسرية.
+        </p>
+      </div>
+
+      <button class="btn btn-primary" onclick="openSessionModal()">
+        <i class="fa-solid fa-plus"></i> تسجيل جلسة جديدة
+      </button>
+    </div>
+
+    <!-- جدول الجلسات المسجلة -->
+    <section class="data-table-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.25rem;"><i class="fa-solid fa-calendar-check"></i> سجل الجلسات المعتمد</h3>
+        <span class="badge-status active">بيانات موثقة</span>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>التاريخ</th>
+            <th>الطفل</th>
+            <th>المدة</th>
+            <th>الأهداف المخططة</th>
+            <th>النتائج والمخرجات</th>
+            <th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody id="sessionsFullTableBody">
+          <tr><td colspan="6" class="text-center">جاري تحميل الجلسات...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- Modal تسجيل جلسة -->
+  <div id="sessionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+    <div class="interactive-card" style="background:#ffffff; max-width:600px; width:90%; padding:25px; border-radius:24px; text-align:right;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 style="margin:0; color:var(--primary);"><i class="fa-solid fa-calendar-plus"></i> توثيق جلسة تأهيلية جديدة</h3>
+        <button class="btn btn-sm btn-outline-danger" onclick="closeSessionModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleCreateSession(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>اختر الطفل</label>
+            <select id="sessChildId" class="form-control" required>
+              <option value="1">عمر خالد (طيف توحد - 5 سنوات)</option>
+              <option value="2">نور سالم (متلازمة داون - 7 سنوات)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>تاريخ الجلسة</label>
+            <input type="date" id="sessDate" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>المدة (بالدقائق)</label>
+            <input type="number" id="sessDuration" class="form-control" value="45" min="15" max="120" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>الأهداف المخططة للجلسة</label>
+          <textarea id="sessObjectives" class="form-control" rows="2" placeholder="مثال: التدريب على نطق الحرف الأول من كلمة ماء..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>النتائج وملاحظات المخرجات</label>
+          <textarea id="sessOutcome" class="form-control" rows="2" placeholder="مثال: أظهر استجابة ممتازة وطلب الماء مرتين بنجاح..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>حالة الجلسة</label>
+          <select id="sessStatus" class="form-control">
+            <option value="completed">مكتملة بنجاح ✅</option>
+            <option value="scheduled">مجدولة للمستقبل ⏳</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">
+          <i class="fa-solid fa-check"></i> حفظ الجلسة في النظام
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('sessions');
+      A11y.init();
+      document.getElementById('sessDate').value = new Date().toISOString().split('T')[0];
+      await loadSessions();
+    });
+
+    async function loadSessions() {
+      const res = await HopeApi.getSessions();
+      const tbody = document.getElementById('sessionsFullTableBody');
+      if (res.ok && res.data.length > 0) {
+        tbody.innerHTML = res.data.map(s => `
+          <tr>
+            <td><strong>${s.session_date}</strong></td>
+            <td>${s.child_id === 1 ? 'عمر خالد' : (s.child_id === 2 ? 'نور سالم' : 'طفل #' + s.child_id)}</td>
+            <td>${s.duration_minutes} دقيقة</td>
+            <td>${s.objectives}</td>
+            <td style="color:#166534;">${s.outcome || 'قيد الانتظار'}</td>
+            <td><span class="badge-status ${s.status === 'completed' ? 'completed' : 'in_progress'}">${s.status === 'completed' ? 'مكتملة' : 'مجدولة'}</span></td>
+          </tr>
+        `).join('');
+      } else {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center">لا توجد جلسات مسجلة</td></tr>';
+      }
+    }
+
+    function openSessionModal() {
+      document.getElementById('sessionModal').style.display = 'flex';
+    }
+
+    function closeSessionModal() {
+      document.getElementById('sessionModal').style.display = 'none';
+    }
+
+    async function handleCreateSession(e) {
+      e.preventDefault();
+      const payload = {
+        child_id: Number(document.getElementById('sessChildId').value),
+        session_date: document.getElementById('sessDate').value,
+        duration_minutes: Number(document.getElementById('sessDuration').value),
+        objectives: document.getElementById('sessObjectives').value.trim(),
+        outcome: document.getElementById('sessOutcome').value.trim(),
+        status: document.getElementById('sessStatus').value
+      };
+
+      const res = await HopeApi.createSession(payload);
+      if (res.ok) {
+        AppCore.celebrate();
+        alert('تم حفظ الجلسة بنجاح.');
+        closeSessionModal();
+        await loadSessions();
+      } else {
+        alert(res.data.error || 'فشل حفظ الجلسة');
+      }
+    }
+  </script>
+</body>
+</html>
+

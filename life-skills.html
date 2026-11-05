@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المهارات الحياتية والاستقلالية (10 مهارات) | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body class="child-mode">
+  <header></header>
+
+  <main class="container" style="margin-top: 25px; margin-bottom: 60px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-hands-bubbles"></i> برنامج المهارات الحياتية والاستقلالية (10 مهارات يومية)
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;">
+          جداول بصرية تفاعلية تجزئ المهارة إلى خطوات واضحة ومصورة لمساعدة الطفل على إتقانها ذاتيًا.
+        </p>
+      </div>
+
+      <div style="background: #ffffff; padding: 10px 20px; border-radius: 999px; box-shadow: var(--shadow-card); font-weight: 800; color: #16a34a;">
+        <i class="fa-solid fa-medal"></i> خطوة بخطوة نحو الاستقلالية الذاتية
+      </div>
+    </div>
+
+    <!-- شريط أزرار المهارات العشرة -->
+    <div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap;" id="skillsSelectorBar">
+      <button class="btn btn-primary" onclick="loadSkillRoutine('hands', this)">1. غسل اليدين 🧼</button>
+      <button class="btn btn-outline-primary" onclick="loadSkillRoutine('teeth', this)">2. تنظيف الأسنان 🪥</button>
+      <button class="btn btn-outline-primary" onclick="loadSkillRoutine('tidy', this)">3. ترتيب الأدوات 🧸</button>
+      <button class="btn btn-outline-primary" onclick="loadSkillRoutine('clothes', this)">4. ارتداء الملابس 👕</button>
+      <button class="btn btn-outline-primary" onclick="loadSkillRoutine('eat', this)">5. تناول الطعام 🍽️</button>
+      <button class="btn btn-outline-primary" onclick="loadSkillRoutine('toilet', this)">6. استخدام الحمام 🚽</button>
+      <button class="btn btn-outline-primary" onclick="loadSkillRoutine('wait', this)">7. الانتظار وتبادل الأدوار ⏳</button>
+      <button class="btn btn-outline-primary" onclick="loadSkillRoutine('ask_help', this)">8. طلب المساعدة 🙋‍♂️</button>
+      <button class="btn btn-outline-primary" onclick="loadSkillRoutine('instructions', this)">9. اتباع التعليمات 📋</button>
+      <button class="btn btn-outline-primary" onclick="loadSkillRoutine('hygiene', this)">10. النظافة الشخصية 🚿</button>
+    </div>
+
+    <!-- بطاقة المهارة والهدف والخطوات المصورة -->
+    <section class="interactive-card" style="padding: 30px 22px; background: #ffffff; border-radius: 28px;">
+      
+      <div style="border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <h2 id="routineTitle" style="color: var(--primary); margin: 0; font-size: 1.5rem;">
+            1. غسل اليدين بالماء والصابون 🧼
+          </h2>
+          <span id="routineProgressBadge" class="badge-status in_progress">0 / 4 خطوات مكتملة</span>
+        </div>
+        <p id="routineGoalText" style="color:var(--text-muted); font-size:1rem; margin:6px 0 0 0;">
+          <strong>الهدف التعليمي:</strong> أن يغسل الطفل يديه باتباع التسلسل المصور بنسبة إتقان 100% دون مساعدة جسدية.
+        </p>
+      </div>
+
+      <!-- خطوات المهارة التفاعلية -->
+      <div id="stepsContainer" style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Filled by JS -->
+      </div>
+
+      <!-- زر الإنجاز النهائي للمهارة -->
+      <div style="margin-top: 30px; text-align: center;">
+        <button id="finishRoutineBtn" class="btn btn-lg btn-success animate__animated animate__pulse animate__infinite" style="display: none; border-radius: 999px; padding: 15px 40px; font-size: 1.3rem;" onclick="celebrateRoutineSuccess()">
+          🎉 أنا بطل مستقل! أتقنت خطوات المهارة بالكامل ⭐
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    const ALL_10_SKILLS = {
+      hands: {
+        title: '1. غسل اليدين بالماء والصابون 🧼',
+        goal: 'أن يغسل الطفل يديه باتباع التسلسل المصور بنسبة إتقان 100% دون مساعدة جسدية.',
+        steps: [
+          { num: 1, text: 'أفتح صنبور الماء برفق وأبلل يدي', emoji: '🚰', prompt: 'أفتح صنبور الماء برفق وأبلل يدي بالماء النظيف.' },
+          { num: 2, text: 'أضع الصابون وأفرك باطن اليدين والأصابع', emoji: '🫧', prompt: 'أضع الصابون وأفرك يدي حتى تظهر رغوة الصابون البيضاء.' },
+          { num: 3, text: 'أغسل يدي بالماء النظيف لإزالة الرغوة', emoji: '💧', prompt: 'أغسل يدي تحت الماء حتى تذهب كل الرغوة تمامًا.' },
+          { num: 4, text: 'أجفف يدي بالمنشفة النظيفة وأغلق الصنبور', emoji: '🧖', prompt: 'أجفف يدي بالمنشفة. يداي الآن نظيفتان وجميلتان!' }
+        ]
+      },
+      teeth: {
+        title: '2. تنظيف الأسنان بالفرشاة والمعجون 🪥',
+        goal: 'أن ينظف الطفل أسنانه بحركات دائرية لمدة دقيقة مرتين يومياً.',
+        steps: [
+          { num: 1, text: 'أضع كمية صغيرة من المعجون على الفرشاة', emoji: '🧴', prompt: 'أضع حبة صغيرة من معجون الأسنان على فرشاتي.' },
+          { num: 2, text: 'أنظف أسناني بلطف بحركات دائرية ناعمة', emoji: '🪥', prompt: 'أنظف أسناني من الأعلى والأسفل بهدوء ورفق.' },
+          { num: 3, text: 'أتمضمض بالماء وأبصق في المغسلة', emoji: '💧', prompt: 'أتمضمض بالماء النظيف وأبصق في المغسلة.' },
+          { num: 4, text: 'أغسل الفرشاة وأبتسم في المرآة لأرى أسناني اللامعة', emoji: '✨', prompt: 'أسناني الآن بيضاء ولامعة مثل النجوم!' }
+        ]
+      },
+      tidy: {
+        title: '3. ترتيب الأدوات والألعاب 🧸',
+        goal: 'أن يعيد الطفل ألعابه وأدواته إلى صندوقها المخصص بعد الانتهاء من اللعب.',
+        steps: [
+          { num: 1, text: 'أسمع صوت انتهاء وقت اللعب وأتوقف بهدوء', emoji: '⏰', prompt: 'انتهى وقت اللعب، حان وقت الترتيب بروح البطل.' },
+          { num: 2, text: 'أجمع الألعاب والمكعبات من على الأرض', emoji: '🧩', prompt: 'أجمع المكعبات والألعاب بلطف بيدي الاثنتين.' },
+          { num: 3, text: 'أضع كل لعبة في صندوقها المخصص', emoji: '📦', prompt: 'أضع الألعاب داخل صندوق الألعاب الملون.' },
+          { num: 4, text: 'أتأكد أن غرفتي أصبحت مرتبة ونظيفة', emoji: '👏', prompt: 'غرفتي الآن مرتبة وأنا بطل منظم ورائع!' }
+        ]
+      },
+      clothes: {
+        title: '4. ارتداء الملابس والحذاء 👕',
+        goal: 'أن يرتدي الطفل قميصه وبنطاله وحذاءه بشكل مستقل.',
+        steps: [
+          { num: 1, text: 'أختار ملابسي النظيفة والمجهزة لي', emoji: '👕', prompt: 'أختار ملابسي النظيفة والمريحة.' },
+          { num: 2, text: 'أدخل رأسي برفق في فتحة القميص ثم يدي', emoji: '👔', prompt: 'أدخل رأسي ثم ذراعي اليمنى ثم اليسرى.' },
+          { num: 3, text: 'أرتدي البنطال وأسحبه للأعلى بهدوء', emoji: '👖', prompt: 'أرتدي البنطال وأسحبه للأعلى بلطف.' },
+          { num: 4, text: 'أرتدي الحذاء وألصق الشريط اللاصق', emoji: '👟', prompt: 'أرتدي حذائي وأنا الآن جاهز للخروج والمرح!' }
+        ]
+      },
+      eat: {
+        title: '5. تناول الطعام باستقلالية 🍽️',
+        goal: 'أن يتناول الطفل وجبته باستخدام الملعقة والشرب بالكوب دون انسكاب.',
+        steps: [
+          { num: 1, text: 'أجلس على الكرسي وأقول بسم الله', emoji: '🪑', prompt: 'أجلس بهدوء على مقعدي وأقول بسم الله الرحمن الرحيم.' },
+          { num: 2, text: 'أمسك الملعقة بيدي اليمنى وأتناول طعامي', emoji: '🥄', prompt: 'أمسك الملعقة وأكل لقيمات صغيرة بهدوء.' },
+          { num: 3, text: 'أمسح فمي بالمنديل عند الحاجة', emoji: '🧻', prompt: 'أمسح فمي بالمنديل النظيف بعد الأكل.' },
+          { num: 4, text: 'أحمل طبقي إلى المطبخ وأقول الحمد لله', emoji: '🥣', prompt: 'أعيد طبقي بهدوء وأقول الحمد لله الذي أطعمنا.' }
+        ]
+      },
+      toilet: {
+        title: '6. استخدام الحمام 🚽',
+        goal: 'أن يطلب الطفل الذهاب للحمام ويتبع خطوات النظافة بشكل مستقل.',
+        steps: [
+          { num: 1, text: 'أعبر بالصورة أو الكلمة: أريد الحمام', emoji: '🙋‍♂️', prompt: 'أشير إلى بطاقة الحمام أو أقول للمعلمة أريد الحمام.' },
+          { num: 2, text: 'أدخل الحمام وأغلق الباب برفق', emoji: '🚪', prompt: 'أدخل الحمام بهدوء وأغلق الباب.' },
+          { num: 3, text: 'أستخدم المناديل وأنظف نفسي بعناية', emoji: '🧻', prompt: 'أستخدم المناديل النظيفة بعناية.' },
+          { num: 4, text: 'أضغط زر السيفون وأغسل يدي بالصابون', emoji: '🧼', prompt: 'أضغط زر الماء وأغسل يدي بالصابون والماء جيداً.' }
+        ]
+      },
+      wait: {
+        title: '7. الانتظار وتبادل الأدوار ⏳',
+        goal: 'أن ينتظر الطفل دوره في اللعب لمدة دقيقة دون إظهار سلوكيات توتر.',
+        steps: [
+          { num: 1, text: 'أنتظر صديقي حتى ينهي دوره في اللعبة', emoji: '🤝', prompt: 'دور صديقي الآن، وأنا أنتظر بهدوء وابتسامة.' },
+          { num: 2, text: 'أنظر لساعة الرمل أو أتنفس بعمق', emoji: '⏳', prompt: 'أنظر للوقت وأتنفس بهدوء حتى يحين دوري.' },
+          { num: 3, text: 'أسمع المعلمة تقول: دورك يا بطل!', emoji: '🎉', prompt: 'المعلمة تناديني: دورك الآن يا بطلنا الجميل!' },
+          { num: 4, text: 'ألعب بدوري بسعادة وأشكر صديقي', emoji: '🎮', prompt: 'ألعب بدوري بحب ومشاركة جميلة.' }
+        ]
+      },
+      ask_help: {
+        title: '8. طلب المساعدة عند الحاجة 🙋‍♂️',
+        goal: 'أن يطلب الطفل مساعدة البالغين بدلاً من الصراخ أو التوتر.',
+        steps: [
+          { num: 1, text: 'أشعر بصعوبة في فتح العلبة أو إكمال المهمة', emoji: '📦', prompt: 'عندما أواجه صعوبة، أتوقف بهدوء دون توتر.' },
+          { num: 2, text: 'أنظر إلى المعلمة أو والدي', emoji: '👀', prompt: 'أنظر في عيني معلمتي أو أمي وأبتسم.' },
+          { num: 3, text: 'أرفع بطاقة المساعدة أو أقول: ساعدني من فضلك', emoji: '🆘', prompt: 'أقول بوضوح: ساعدني من فضلك يا معلمتي.' },
+          { num: 4, text: 'أستلم المساعدة وأقول شكرًا لك!', emoji: '❤️', prompt: 'شكراً لمساعدتي، والآن أستطيع الإكمال بنجاح!' }
+        ]
+      },
+      instructions: {
+        title: '9. اتباع التعليمات المصورة 📋',
+        goal: 'أن ينفذ الطفل تعليمات من خطوتين بالاعتماد على الجدول البصري.',
+        steps: [
+          { num: 1, text: 'أنظر إلى الجدول البصري لأعرف مهمتي', emoji: '📋', prompt: 'أنظر لبطاقة الجدول البصري وأركز جيداً.' },
+          { num: 2, text: 'أنفذ الخطوة الأولى بدقة وهدوء', emoji: '1️⃣', prompt: 'أنفذ الخطوة الأولى بنجاح.' },
+          { num: 3, text: 'أنتقل للخطوة الثانية وأكملها', emoji: '2️⃣', prompt: 'أنفذ الخطوة الثانية باقتدار.' },
+          { num: 4, text: 'أضع علامة تم الإنجاز في جدول المهام', emoji: '✔️', prompt: 'أضع علامة صح الخضراء، أنا بطل مطيع وناجح!' }
+        ]
+      },
+      hygiene: {
+        title: '10. المحافظة على النظافة الشخصية 🚿',
+        goal: 'أن يحافظ الطفل على نظافة وجهه ويديه وملابسه طوال اليوم.',
+        steps: [
+          { num: 1, text: 'أغسل وجهي بالماء العذب عند الاستيقاظ', emoji: '🌅', prompt: 'أغسل وجهي صباحاً لأشعر بالنشاط والانتعاش.' },
+          { num: 2, text: 'أمشط شعري برفق بالفرشاة', emoji: '🪮', prompt: 'أمشط شعري لأبدو بمظهر جميل ومرتب.' },
+          { num: 3, text: 'أستخدم المنديل عند العطس وأرميه في السلة', emoji: '🗑️', prompt: 'أعطس في المنديل وأضعه فوراً في سلة المهملات.' },
+          { num: 4, text: 'أحافظ على رائحتي ونظافتي الجميلة دائماً', emoji: '🌸', prompt: 'أنا طفل نظيف ومرتب يحبه الجميع!' }
+        ]
+      }
+    };
+
+    let activeSkillKey = 'hands';
+    let masteredStepsSet = new Set();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      HopeApi.renderHeader('life-skills');
+      A11y.init();
+      AppCore.initAudio();
+      loadSkillRoutine('hands');
+    });
+
+    function loadSkillRoutine(key, btn = null) {
+      if (btn) {
+        document.querySelectorAll('#skillsSelectorBar button').forEach(b => {
+          b.className = 'btn btn-outline-primary';
+        });
+        btn.className = 'btn btn-primary';
+      }
+
+      activeSkillKey = key;
+      masteredStepsSet.clear();
+
+      const r = ALL_10_SKILLS[key];
+      document.getElementById('routineTitle').innerText = r.title;
+      document.getElementById('routineGoalText').innerHTML = `<strong>الهدف التعليمي:</strong> ${r.goal}`;
+      updateProgressBadge();
+
+      const container = document.getElementById('stepsContainer');
+      container.innerHTML = r.steps.map(st => `
+        <div id="stepCard_${st.num}" class="interactive-card text-right animate__animated animate__fadeIn" onclick="clickStepAction(${st.num}, '${st.prompt}')" style="cursor:pointer; display:flex; align-items:center; gap:20px; padding:18px 22px; border-radius:20px; border:2px solid #e2e8f0; transition:all 0.2s;">
+          <div style="font-size:48px;">${st.emoji}</div>
+          <div style="flex-grow:1;">
+            <span style="font-size:0.85rem; color:#64748b; font-weight:800;">الخطوة ${st.num}</span>
+            <h3 style="margin:2px 0 0 0; font-size:1.25rem; color:var(--text-main);">${st.text}</h3>
+          </div>
+          <div id="checkIcon_${st.num}" style="font-size:32px; color:#cbd5e1;">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('finishRoutineBtn').style.display = 'none';
+      AppCore.playSound('pop');
+    }
+
+    function clickStepAction(num, prompt) {
+      masteredStepsSet.add(num);
+      AppCore.playSound('pop');
+      SpeechEngine.speak(prompt);
+
+      const card = document.getElementById(`stepCard_${num}`);
+      const icon = document.getElementById(`checkIcon_${num}`);
+      if (card && icon) {
+        card.style.borderColor = 'var(--mint-green)';
+        card.style.background = '#f0fdf4';
+        icon.style.color = 'var(--mint-green)';
+      }
+
+      updateProgressBadge();
+
+      const total = ALL_10_SKILLS[activeSkillKey].steps.length;
+      if (masteredStepsSet.size === total) {
+        document.getElementById('finishRoutineBtn').style.display = 'inline-block';
+        AppCore.playSound('celebrate');
+      }
+    }
+
+    function updateProgressBadge() {
+      const total = ALL_10_SKILLS[activeSkillKey].steps.length;
+      document.getElementById('routineProgressBadge').innerText = `${masteredStepsSet.size} / ${total} خطوات مكتملة`;
+    }
+
+    async function celebrateRoutineSuccess() {
+      AppCore.celebrate();
+      AppCore.playSound('celebrate');
+      SpeechEngine.speak('ممتاز جدًا! أحسنت يا بطلنا المستقل! لقد أتممت جميع خطوات المهارة بنجاح.');
+
+      // Record Life Skills Attempt in Backend
+      await HopeApi.recordAttempt({
+        activityId: 8,
+        score: 100,
+        duration: 35,
+        helpType: 'visual',
+        promptNotes: `إتقان مهارة: ${ALL_10_SKILLS[activeSkillKey].title}`,
+        success: true
+      });
+    }
+  </script>
+</body>
+</html>

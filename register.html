@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إنشاء حساب جديد | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="max-width: 680px; margin-top: 40px; margin-bottom: 60px;">
+    <div class="interactive-card text-center" style="padding: 35px 25px;">
+      <div style="font-size: 50px; margin-bottom: 10px;">🌱</div>
+      <h1 style="font-size: 1.8rem; margin-bottom: 6px; color: var(--primary);">إنشاء حساب جديد</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px;">
+        انضم إلينا في منصة بصمة أمل، وابدأ رحلة تعليمية وتأهيلية مصممة خصيصًا لكل بطل.
+      </p>
+
+      <div id="registerAlert" style="display: none; padding: 12px; border-radius: 12px; margin-bottom: 20px; font-weight: bold;"></div>
+
+      <form id="registerForm" onsubmit="handleRegisterSubmit(event)">
+        <!-- نوع الحساب -->
+        <div class="form-group text-right">
+          <label><i class="fa-solid fa-users"></i> نوع الحساب</label>
+          <div style="display: flex; gap: 10px; margin-top: 6px;">
+            <label style="flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; text-align: center;">
+              <input type="radio" name="roleName" value="child" checked onchange="toggleChildFields(true)">
+              <strong>👶 طفل</strong>
+            </label>
+            <label style="flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; text-align: center;">
+              <input type="radio" name="roleName" value="parent" onchange="toggleChildFields(false)">
+              <strong>👨‍👩‍👦 ولي أمر</strong>
+            </label>
+            <label style="flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; text-align: center;">
+              <input type="radio" name="roleName" value="teacher" onchange="toggleChildFields(false)">
+              <strong>👩‍🏫 معلم / أخصائي</strong>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group text-right">
+            <label><i class="fa-solid fa-id-card"></i> الاسم الكامل</label>
+            <input type="text" id="fullName" class="form-control" placeholder="الاسم الثلاثي أو اسم الطفل" required>
+          </div>
+          <div class="form-group text-right">
+            <label><i class="fa-solid fa-user"></i> اسم المستخدم</label>
+            <input type="text" id="username" class="form-control" placeholder="اسم مستخدم بالإنجليزية" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group text-right">
+            <label><i class="fa-solid fa-envelope"></i> البريد الإلكتروني</label>
+            <input type="email" id="email" class="form-control" placeholder="name@example.com" required>
+          </div>
+          <div class="form-group text-right">
+            <label><i class="fa-solid fa-lock"></i> كلمة المرور</label>
+            <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <!-- حقول إضافية خاصة بالطفل -->
+        <div id="childSpecificFields" style="background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 16px; padding: 18px; margin-bottom: 20px;">
+          <h4 style="margin: 0 0 12px 0; color: #166534; font-size: 1rem;">
+            <i class="fa-solid fa-hands-holding-child"></i> بيانات الطفل التأهيلية (3 - 12 سنة)
+          </h4>
+          <div class="form-row">
+            <div class="form-group text-right">
+              <label><i class="fa-solid fa-cake-candles"></i> عمر الطفل (بالسنوات)</label>
+              <select id="childAge" class="form-control">
+                <option value="3">3 سنوات (مرحلة التدخل المبكر)</option>
+                <option value="4">4 سنوات</option>
+                <option value="5" selected>5 سنوات</option>
+                <option value="6">6 سنوات</option>
+                <option value="7">7 سنوات</option>
+                <option value="8">8 سنوات</option>
+                <option value="9">9 سنوات</option>
+                <option value="10">10 سنوات</option>
+                <option value="11">11 سنة</option>
+                <option value="12">12 سنة</option>
+              </select>
+            </div>
+            <div class="form-group text-right">
+              <label><i class="fa-solid fa-stethoscope"></i> الفئة المستهدفة</label>
+              <select id="disabilityType" class="form-control">
+                <option value="autism">🧩 اضطراب طيف التوحد (Autism)</option>
+                <option value="down">🌟 متلازمة داون (Down Syndrome)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group text-right" style="margin-bottom: 0;">
+            <label><i class="fa-solid fa-phone"></i> رقم هاتف ولي الأمر للطوارئ</label>
+            <input type="tel" id="phone" class="form-control" placeholder="05xxxxxxxx">
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn btn-lg btn-primary" style="width: 100%; margin-top: 10px;">
+          <i class="fa-solid fa-user-plus"></i> إتمام التسجيل والبدء
+        </button>
+      </form>
+
+      <div style="margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+        <span style="color: var(--text-muted); font-size: 0.95rem;">لديك حساب بالفعل؟</span>
+        <a href="login.html" style="color: var(--primary); font-weight: 800; text-decoration: none; margin-right: 5px;">
+          تسجيل الدخول <i class="fa-solid fa-arrow-left"></i>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      HopeApi.renderHeader('register');
+      A11y.init();
+    });
+
+    function toggleChildFields(isChild) {
+      const el = document.getElementById('childSpecificFields');
+      el.style.display = isChild ? 'block' : 'none';
+      AppCore.playSound('pop');
+    }
+
+    async function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const roleName = document.querySelector('input[name="roleName"]:checked').value;
+      const fullName = document.getElementById('fullName').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const age = document.getElementById('childAge').value;
+      const disabilityType = document.getElementById('disabilityType').value;
+      const phone = document.getElementById('phone').value.trim();
+
+      const alertBox = document.getElementById('registerAlert');
+      const submitBtn = document.getElementById('submitBtn');
+
+      alertBox.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري حفظ البيانات...';
+
+      const payload = {
+        roleName,
+        fullName,
+        username,
+        email,
+        password,
+        age,
+        disabilityType,
+        phone
+      };
+
+      const res = await HopeApi.register(payload);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> إتمام التسجيل والبدء';
+
+      if (!res.ok) {
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#fee2e2';
+        alertBox.style.color = '#991b1b';
+        alertBox.innerText = res.data.error || 'تعذر إنشاء الحساب';
+        AppCore.playSound('boing');
+        return;
+      }
+
+      AppCore.celebrate();
+      alertBox.style.display = 'block';
+      alertBox.style.background = '#dcfce7';
+      alertBox.style.color = '#166534';
+      alertBox.innerText = 'تم إنشاء الحساب بنجاح! جاري توجيهك إلى صفحتك المخصصة...';
+
+      setTimeout(() => {
+        if (roleName === 'child') window.location.href = 'child-zone.html';
+        else if (roleName === 'teacher') window.location.href = 'teacher-dashboard.html';
+        else window.location.href = 'parent-dashboard.html';
+      }, 900);
+    }
+  </script>
+</body>
+</html>
+

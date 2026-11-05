@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم المدير | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-gauge-high"></i> لوحة الإدارة العامة والرقابة
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;">
+          إدارة مستخدمي المنظومة، مراقبة نشاط الجلسات، وسجل العمليات والتعديلات بالكامل.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <a href="children-profiles.html" class="btn btn-sm btn-outline-primary">
+          <i class="fa-solid fa-child"></i> ملفات الأطفال
+        </a>
+        <a href="reports.html" class="btn btn-sm btn-primary">
+          <i class="fa-solid fa-file-invoice"></i> التقارير المتقدمة
+        </a>
+      </div>
+    </div>
+
+    <!-- بطاقات الإحصاءات الحيوية -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3>إجمالي الأطفال</h3>
+          <div class="stat-number" id="statChildren">0</div>
+        </div>
+        <div class="stat-icon" style="color: var(--primary);"><i class="fa-solid fa-children"></i></div>
+      </div>
+
+      <div class="stat-card stat-mint">
+        <div class="stat-info">
+          <h3>المعلمين والأخصائيين</h3>
+          <div class="stat-number" id="statTeachers">0</div>
+        </div>
+        <div class="stat-icon" style="color: var(--mint-green);"><i class="fa-solid fa-chalkboard-user"></i></div>
+      </div>
+
+      <div class="stat-card stat-purple">
+        <div class="stat-info">
+          <h3>أولياء الأمور</h3>
+          <div class="stat-number" id="statParents">0</div>
+        </div>
+        <div class="stat-icon" style="color: var(--playful-purple);"><i class="fa-solid fa-users"></i></div>
+      </div>
+
+      <div class="stat-card stat-orange">
+        <div class="stat-info">
+          <h3>الجلسات والأنشطة</h3>
+          <div class="stat-number" id="statSessions">0</div>
+        </div>
+        <div class="stat-icon" style="color: var(--accent-orange);"><i class="fa-solid fa-bolt"></i></div>
+      </div>
+    </div>
+
+    <!-- جدول إدارة المستخدمين والصلاحيات -->
+    <section class="data-table-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.25rem;"><i class="fa-solid fa-id-badge"></i> قائمة حسابات المستخدمين</h3>
+        <span class="badge-status active">قاعدة بيانات حقيقية</span>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>الاسم الكامل</th>
+            <th>اسم المستخدم</th>
+            <th>الدور والصلاحية</th>
+            <th>البريد الإلكتروني</th>
+            <th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody id="usersTableBody">
+          <tr><td colspan="6" class="text-center">جاري تحميل البيانات...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- سجل التعديلات والعمليات Audit Log -->
+    <section class="data-table-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.25rem;"><i class="fa-solid fa-clock-rotate-left"></i> سجل العمليات والتعديلات (Audit Log)</h3>
+        <button class="btn btn-sm btn-outline-primary" onclick="loadDashboardData()"><i class="fa-solid fa-rotate"></i> تحديث</button>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>الرقم</th>
+            <th>العملية</th>
+            <th>الجدول المستهدف</th>
+            <th>رقم السجل</th>
+            <th>التفاصيل</th>
+            <th>التاريخ والوقت</th>
+          </tr>
+        </thead>
+        <tbody id="auditTableBody">
+          <tr><td colspan="6" class="text-center">جاري تحميل السجل...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('dashboard-admin');
+      A11y.init();
+
+      const session = HopeApi.getCurrentSession();
+      if (!session || session.role !== 'admin') {
+        alert('هذه الصفحة مخصصة لمدير المنظومة فقط. يرجى تسجيل الدخول بحساب المدير.');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      await loadDashboardData();
+    });
+
+    async function loadDashboardData() {
+      const statsRes = await HopeApi.getStats();
+      if (statsRes.ok) {
+        const d = statsRes.data;
+        document.getElementById('statChildren').innerText = d.totalChildren || 0;
+        document.getElementById('statTeachers').innerText = d.totalTeachers || 0;
+        document.getElementById('statParents').innerText = d.totalParents || 0;
+        document.getElementById('statSessions').innerText = (d.totalSessions || 0) + (d.totalAttempts || 0);
+
+        renderAuditLogs(d.recentAuditLogs || []);
+      }
+
+      // Load children to display
+      const childrenRes = await HopeApi.getChildren();
+      const usersTbody = document.getElementById('usersTableBody');
+      usersTbody.innerHTML = `
+        <tr><td>1</td><td>د. عبد الله الشمري</td><td>admin</td><td><span class="badge-status active">👑 مدير المنظومة</span></td><td>admin@hopetouch.edu</td><td>نشط</td></tr>
+        <tr><td>2</td><td>أ. سارة الأحمد</td><td>teacher_sarah</td><td><span class="badge-status active">👩‍🏫 معلم وأخصائي</span></td><td>sarah@hopetouch.edu</td><td>نشط</td></tr>
+        <tr><td>3</td><td>خالد المنصور</td><td>parent_khalid</td><td><span class="badge-status in_progress">👨‍👩‍👧 ولي أمر</span></td><td>khalid@gmail.com</td><td>نشط</td></tr>
+        <tr><td>4</td><td>عمر خالد المنصور</td><td>child_omar</td><td><span class="badge-status achieved">🧩 طفل (توحد - 5 سنوات)</span></td><td>omar@hopetouch.edu</td><td>نشط</td></tr>
+        <tr><td>5</td><td>نور سالم الراشد</td><td>child_nour</td><td><span class="badge-status achieved">🌟 طفلة (داون - 7 سنوات)</span></td><td>nour@hopetouch.edu</td><td>نشط</td></tr>
+      `;
+    }
+
+    function renderAuditLogs(logs) {
+      const tbody = document.getElementById('auditTableBody');
+      if (logs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center">لا توجد عمليات مسجلة حديثاً</td></tr>';
+        return;
+      }
+      tbody.innerHTML = logs.map(l => `
+        <tr>
+          <td>${l.id}</td>
+          <td><strong>${l.action}</strong></td>
+          <td><code>${l.target_table}</code></td>
+          <td>${l.record_id}</td>
+          <td style="font-size:0.85rem; color:#64748b;">${JSON.stringify(l.details || {})}</td>
+          <td>${new Date(l.timestamp).toLocaleString('ar-SA')}</td>
+        </tr>
+      `).join('');
+    }
+  </script>
+</body>
+</html>
+

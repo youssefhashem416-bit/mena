@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ملفات الأطفال الشاملة 360° | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-folder-open"></i> ملفات الأطفال الشاملة (Child Profile 360°)
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;">
+          السجلات الطبية والتربوية، نقاط القوة والاحتياج، وتاريخ التقييمات والأهداف والمساعدات عبر الزمن.
+        </p>
+      </div>
+
+      <button class="btn btn-primary" onclick="openAddChildModal()">
+        <i class="fa-solid fa-user-plus"></i> إضافة طفل جديد
+      </button>
+    </div>
+
+    <!-- شريط البحث والتصفية -->
+    <div class="interactive-card" style="padding: 18px; margin-bottom: 25px;">
+      <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <div style="flex: 2; min-width: 200px;">
+          <input type="text" id="searchInput" class="form-control" placeholder="🔍 ابحث باسم الطفل..." oninput="filterChildren()">
+        </div>
+        <div style="flex: 1; min-width: 150px;">
+          <select id="disabilityFilter" class="form-control" onchange="filterChildren()">
+            <option value="all">كل الفئات</option>
+            <option value="autism">طيف التوحد 🧩</option>
+            <option value="down">متلازمة داون 🌟</option>
+          </select>
+        </div>
+        <div style="flex: 1; min-width: 150px;">
+          <select id="ageFilter" class="form-control" onchange="filterChildren()">
+            <option value="all">كل الأعمار (3 - 12)</option>
+            <option value="early">3 - 5 سنوات (تدخل مبكر)</option>
+            <option value="mid">6 - 8 سنوات</option>
+            <option value="late">9 - 12 سنة</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- شبكة ملفات الأطفال -->
+    <div id="childrenListGrid" class="row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+      <!-- Filled by JS -->
+    </div>
+
+  </main>
+
+  <!-- نافذة عرض الملف الشامل 360° Dossier Modal -->
+  <div id="dossierModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
+    <div class="interactive-card" style="background:#ffffff; max-width:850px; width:92%; padding:30px; border-radius:24px; max-height:90vh; overflow-y:auto; text-align:right;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #e2e8f0; padding-bottom:12px; margin-bottom:18px;">
+        <h2 style="margin:0; color:var(--primary); font-size:1.4rem;" id="dossierModalTitle">
+          <i class="fa-solid fa-address-card"></i> الملف التربوي والتأهيلي الشامل
+        </h2>
+        <button class="btn btn-sm btn-outline-danger" onclick="closeDossierModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div id="dossierContent">
+        <!-- Loaded via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة إضافة طفل جديد Modal -->
+  <div id="addChildModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+    <div class="interactive-card" style="background:#ffffff; max-width:600px; width:90%; padding:25px; border-radius:24px; max-height:90vh; overflow-y:auto; text-align:right;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 style="margin:0; color:var(--primary);"><i class="fa-solid fa-child"></i> إضافة ملف طفل جديد</h3>
+        <button class="btn btn-sm btn-outline-danger" onclick="closeAddChildModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleCreateChild(event)">
+        <div class="form-group">
+          <label>اسم الطفل الثلاثي</label>
+          <input type="text" id="newChildName" class="form-control" placeholder="مثال: يوسف أحمد السالم" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>العمر (سنوات)</label>
+            <input type="number" id="newChildAge" class="form-control" min="3" max="12" value="5" required>
+          </div>
+          <div class="form-group">
+            <label>الجنس</label>
+            <select id="newChildGender" class="form-control">
+              <option value="ذكر">ذكر</option>
+              <option value="أنثى">أنثى</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>الفئة المستهدفة</label>
+            <select id="newChildDisability" class="form-control">
+              <option value="autism">اضطراب طيف التوحد (Autism)</option>
+              <option value="down">متلازمة داون (Down Syndrome)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>المستوى المبدئي</label>
+            <select id="newChildLevel" class="form-control">
+              <option value="0">المستوى 0 (تحفيز حسي)</option>
+              <option value="1" selected>المستوى 1 (صور وأصوات)</option>
+              <option value="2">المستوى 2 (جمل قصيرة)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>الملف الحسي والملاحظات الأولية</label>
+          <textarea id="newChildSensory" class="form-control" rows="2" placeholder="مثال: حساسية للأصوات المرتفعة، يفضل المعززات البصرية..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>رقم هاتف الطوارئ / ولي الأمر</label>
+          <input type="tel" id="newChildEmergency" class="form-control" placeholder="05xxxxxxxx" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">
+          <i class="fa-solid fa-check"></i> حفظ الملف في قاعدة البيانات
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    let allChildren = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('children');
+      A11y.init();
+      await loadChildren();
+    });
+
+    async function loadChildren() {
+      const res = await HopeApi.getChildren();
+      if (res.ok) {
+        allChildren = res.data;
+        renderChildren(allChildren);
+      }
+    }
+
+    function renderChildren(list) {
+      const grid = document.getElementById('childrenListGrid');
+      if (list.length === 0) {
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:30px; color:#64748b;">لا توجد نتائج مطابقة</div>';
+        return;
+      }
+      grid.innerHTML = list.map(c => `
+        <div class="interactive-card text-right" style="border-top: 6px solid ${c.disability_code === 'autism' ? '#2563eb' : '#d97706'};">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-size:45px;">${c.gender === 'أنثى' ? '👧' : '👦'}</span>
+            <span class="badge-status ${c.disability_code === 'autism' ? 'active' : 'assigned'}">
+              ${c.disability_code === 'autism' ? '🧩 طيف التوحد' : '🌟 متلازمة داون'}
+            </span>
+          </div>
+
+          <h3 style="margin:0 0 6px 0; font-size:1.3rem;">${c.full_name}</h3>
+          <p style="margin:0 0 10px 0; color:var(--text-muted); font-size:0.95rem;">
+            العمر: <strong>${c.age} سنوات</strong> | المستوى الحالي: <strong>مستوى ${c.current_level}</strong>
+          </p>
+
+          <div style="background:#f8fafc; padding:10px; border-radius:12px; margin-bottom:14px; font-size:0.9rem;">
+            <p style="margin:0 0 4px 0;"><strong>الملف الحسي:</strong> ${c.sensory_profile}</p>
+            <p style="margin:0; color:#64748b;"><strong>جهة الاتصال:</strong> ${c.emergency_contact || 'غير مسجل'}</p>
+          </div>
+
+          <div style="display:flex; gap:8px; margin-bottom:8px;">
+            <button class="btn btn-sm btn-primary" onclick="viewChildDossier(${c.id})" style="flex:1;">
+              <i class="fa-solid fa-id-card"></i> الملف الشامل 360°
+            </button>
+          </div>
+
+          <div style="display:flex; gap:8px;">
+            <a href="learning-journey.html?child_id=${c.id}" class="btn btn-sm btn-outline-primary" style="flex:1; text-align:center;">
+              <i class="fa-solid fa-route"></i> الرحلة
+            </a>
+            <a href="iep.html?child_id=${c.id}" class="btn btn-sm btn-outline-primary" style="flex:1; text-align:center;">
+              <i class="fa-solid fa-bullseye"></i> الخطة IEP
+            </a>
+            <a href="assessment.html?child_id=${c.id}" class="btn btn-sm btn-outline-secondary" style="flex:1; text-align:center;">
+              <i class="fa-solid fa-clipboard"></i> التقييم
+            </a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function viewChildDossier(childId) {
+      const res = await HopeApi.getChildDossier(childId);
+      if (!res.ok) {
+        alert('تعذر تحميل ملف الطفل');
+        return;
+      }
+
+      const d = res.data;
+      const c = d.child;
+      const modal = document.getElementById('dossierModal');
+      const content = document.getElementById('dossierContent');
+
+      content.innerHTML = `
+        <!-- بطاقة التعريف الأساسية -->
+        <div style="background:#f8fafc; padding:18px; border-radius:16px; margin-bottom:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <h3 style="margin:0 0 4px 0; color:var(--primary); font-size:1.4rem;">${c.full_name}</h3>
+              <p style="margin:0; color:#64748b; font-size:0.95rem;">
+                تاريخ الميلاد: <strong>${c.birth_date || 'غير محدد'}</strong> (${c.age} سنوات) | 
+                تاريخ الالتحاق: <strong>${c.start_date || '2026-09-01'}</strong>
+              </p>
+            </div>
+            <div>
+              <span class="badge-status active">موافقة ولي الأمر على الصورة: ${c.parent_consent_photo ? 'معتمدة وموثقة ✔️' : 'غير معتمدة'}</span>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px; margin-top:12px; font-size:0.9rem;">
+            <div><strong>المعلم المشرف:</strong> ${d.teacher ? d.teacher.specialization : 'أ. سارة الأحمد'}</div>
+            <div><strong>ولي الأمر:</strong> ${d.parent ? d.parent.full_name + ' (' + d.parent.phone + ')' : 'خالد المنصور'}</div>
+            <div><strong>الفئة:</strong> ${c.disability_code === 'autism' ? 'طيف التوحد (ASD)' : 'متلازمة داون'}</div>
+            <div><strong>المستوى العام:</strong> مستوى ${c.current_level}</div>
+          </div>
+        </div>
+
+        <!-- نقاط القوة والصعوبات -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+          <div style="background:#f0fdf4; border:1.5px solid #bbf7d0; padding:14px; border-radius:14px;">
+            <h4 style="margin:0 0 6px 0; color:#166534;"><i class="fa-solid fa-thumbs-up"></i> نقاط القوة والتميز</h4>
+            <p style="margin:0; font-size:0.9rem; line-height:1.5; color:#14532d;">${c.strengths || 'غير مسجلة'}</p>
+          </div>
+          <div style="background:#fff7ed; border:1.5px solid #fed7aa; padding:14px; border-radius:14px;">
+            <h4 style="margin:0 0 6px 0; color:#c2410c;"><i class="fa-solid fa-triangle-exclamation"></i> الصعوبات ومجالات الدعم</h4>
+            <p style="margin:0; font-size:0.9rem; line-height:1.5; color:#7c2d12;">${c.difficulties || 'غير مسجلة'}</p>
+          </div>
+        </div>
+
+        <!-- المهارات المتقنة والمستهدفة -->
+        <div style="margin-bottom:20px;">
+          <h4 style="margin:0 0 8px 0; font-size:1.1rem; color:var(--text-main);"><i class="fa-solid fa-list-check"></i> المهارات المكتسبة والمستهدفة</h4>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div style="background:#f8fafc; padding:12px; border-radius:12px;">
+              <strong style="color:#16a34a; font-size:0.9rem;">المهارات التي يمتلكها حاليًا:</strong>
+              <ul style="margin:6px 0 0 0; padding-right:20px; font-size:0.85rem; color:#334155;">
+                ${(c.mastered_skills || []).map(s => `<li>${s}</li>`).join('')}
+              </ul>
+            </div>
+            <div style="background:#f8fafc; padding:12px; border-radius:12px;">
+              <strong style="color:var(--primary); font-size:0.9rem;">المهارات الجاري تطويرها:</strong>
+              <ul style="margin:6px 0 0 0; padding-right:20px; font-size:0.85rem; color:#334155;">
+                ${(c.skills_to_develop || []).map(s => `<li>${s}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- مستويات المهارات المستقلة (Growth Journey) -->
+        <div style="margin-bottom:20px;">
+          <h4 style="margin:0 0 8px 0; font-size:1.1rem; color:var(--text-main);"><i class="fa-solid fa-route"></i> مستويات المهارات الفردية المستقلة</h4>
+          <table class="data-table" style="font-size:0.88rem;">
+            <thead>
+              <tr>
+                <th>المهارة</th>
+                <th>المجال</th>
+                <th>المستوى الحالي</th>
+                <th>اعتماد المعلم</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${(d.skillLevels || []).map(sl => `
+                <tr>
+                  <td><strong>${sl.skill_name}</strong></td>
+                  <td>${sl.domain}</td>
+                  <td><span class="badge-status active">${sl.level_label}</span></td>
+                  <td>${sl.teacher_approved ? '<span style="color:#16a34a; font-weight:bold;">معتمد من المعلم ✔️</span>' : '<span style="color:#ea580c; font-weight:bold;">بانتظار مراجعة المعلم ⏳</span>'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- سجل المحاولات ونوع المساعدة المقدمة -->
+        <div style="margin-bottom:20px;">
+          <h4 style="margin:0 0 8px 0; font-size:1.1rem; color:var(--text-main);"><i class="fa-solid fa-gamepad"></i> سجل المحاولات والمساعدة التدريجية</h4>
+          <table class="data-table" style="font-size:0.85rem;">
+            <thead>
+              <tr>
+                <th>التاريخ</th>
+                <th>النشاط</th>
+                <th>الدرجة</th>
+                <th>نوع المساعدة المقدمة</th>
+                <th>النتيجة</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${(d.attempts || []).slice(0, 5).map(att => `
+                <tr>
+                  <td>${new Date(att.attempt_date).toLocaleDateString('ar-SA')}</td>
+                  <td>نشاط #${att.activity_id}</td>
+                  <td>${att.score}%</td>
+                  <td><span class="badge-status ${att.help_type === 'none' ? 'achieved' : 'assigned'}">${att.help_type === 'none' ? 'استقلالية تامة (بدون مساعدة)' : att.help_type}</span></td>
+                  <td>${att.success ? 'ناجح ✅' : 'محاولة تشجيعية 🔄'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- الشهادات والمكافآت -->
+        <div>
+          <h4 style="margin:0 0 8px 0; font-size:1.1rem; color:var(--text-main);"><i class="fa-solid fa-award"></i> الشهادات المكتسبة القابلة للطباعة</h4>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            ${(d.certificates || []).map(cert => `
+              <div style="background:#fef9c3; border:1px solid #fef08a; padding:10px 14px; border-radius:12px; font-size:0.9rem;">
+                <strong style="color:#854d0e;">🏆 ${cert.title}</strong>
+                <p style="margin:4px 0 0 0; font-size:0.8rem; color:#713f12;">${cert.skill_name} (${cert.issued_date})</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      modal.style.display = 'flex';
+      AppCore.playSound('pop');
+    }
+
+    function closeDossierModal() {
+      document.getElementById('dossierModal').style.display = 'none';
+    }
+
+    function filterChildren() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const dis = document.getElementById('disabilityFilter').value;
+      const ageGroup = document.getElementById('ageFilter').value;
+
+      let filtered = allChildren.filter(c => {
+        const matchesName = c.full_name.toLowerCase().includes(q);
+        const matchesDis = dis === 'all' || c.disability_code === dis;
+        let matchesAge = true;
+        if (ageGroup === 'early') matchesAge = c.age >= 3 && c.age <= 5;
+        else if (ageGroup === 'mid') matchesAge = c.age >= 6 && c.age <= 8;
+        else if (ageGroup === 'late') matchesAge = c.age >= 9 && c.age <= 12;
+        return matchesName && matchesDis && matchesAge;
+      });
+
+      renderChildren(filtered);
+    }
+
+    function openAddChildModal() {
+      document.getElementById('addChildModal').style.display = 'flex';
+    }
+
+    function closeAddChildModal() {
+      document.getElementById('addChildModal').style.display = 'none';
+    }
+
+    async function handleCreateChild(e) {
+      e.preventDefault();
+      const payload = {
+        full_name: document.getElementById('newChildName').value.trim(),
+        age: Number(document.getElementById('newChildAge').value),
+        gender: document.getElementById('newChildGender').value,
+        disability_code: document.getElementById('newChildDisability').value,
+        disability_id: document.getElementById('newChildDisability').value === 'autism' ? 1 : 2,
+        current_level: Number(document.getElementById('newChildLevel').value),
+        sensory_profile: document.getElementById('newChildSensory').value.trim(),
+        emergency_contact: document.getElementById('newChildEmergency').value.trim(),
+        parent_consent_photo: true,
+        start_date: new Date().toISOString().split('T')[0],
+        mastered_skills: ['المطابقة الأولية'],
+        skills_to_develop: ['التواصل والتفاعل']
+      };
+
+      const res = await HopeApi.createChild(payload);
+      if (res.ok) {
+        AppCore.celebrate();
+        alert('تمت إضافة ملف الطفل بنجاح وتأسيس مراحل رحلته وإعداداته.');
+        closeAddChildModal();
+        await loadChildren();
+      } else {
+        alert(res.data.error || 'فشل إضافة الطفل');
+      }
+    }
+  </script>
+</body>
+</html>

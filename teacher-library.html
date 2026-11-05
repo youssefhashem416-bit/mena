@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكتبة المعلم والموارد التأهيلية | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-book-open-reader"></i> مكتبة المعلم والأدلة الإرشادية
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;">
+          مراجع علمية معتمدة، بطاقات بصرية قابلة للطباعة، وأدلة التعامل مع السلوكيات والبيئة الحسية.
+        </p>
+      </div>
+
+      <button class="btn btn-primary" onclick="openAddResourceModal()">
+        <i class="fa-solid fa-plus"></i> إضافة مورد تعليمي جديد
+      </button>
+    </div>
+
+    <!-- شبكة الموارد التعليمية -->
+    <div id="resourcesGrid" class="row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 20px;">
+      <!-- Filled by JS -->
+    </div>
+
+  </main>
+
+  <!-- Modal إضافة مورد جديد -->
+  <div id="addResourceModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+    <div class="interactive-card" style="background:#ffffff; max-width:600px; width:90%; padding:25px; border-radius:24px; text-align:right;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 style="margin:0; color:var(--primary);"><i class="fa-solid fa-file-circle-plus"></i> إضافة مورد أو دليل للمكتبة</h3>
+        <button class="btn btn-sm btn-outline-danger" onclick="closeAddResourceModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleCreateResource(event)">
+        <div class="form-group">
+          <label>عنوان المورد أو الدليل</label>
+          <input type="text" id="resTitle" class="form-control" placeholder="مثال: بطاقات PECS لروتين الصباح عالية الدقة" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>التصنيف</label>
+            <select id="resCategory" class="form-control">
+              <option value="aac">تواصل بديل (AAC / PECS)</option>
+              <option value="schedules">جداول بصرية وروتين</option>
+              <option value="sensory">تنظيم وتعديل بيئة حسية</option>
+              <option value="behavior">تعديل سلوك وإرشاد</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>نوع الملف</label>
+            <select id="resFileType" class="form-control">
+              <option value="pdf">مستند PDF للتحميل</option>
+              <option value="printable">بطاقات جاهزة للطباعة</option>
+              <option value="guide">دليل إرشادي تفاعلي</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>الوصف وملاحظات الاستخدام</label>
+          <textarea id="resDesc" class="form-control" rows="3" placeholder="اشرح كيف يستفيد المعلم أو ولي الأمر من هذا المورد..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">
+          <i class="fa-solid fa-check"></i> حفظ المورد في المكتبة
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('teacher-library');
+      A11y.init();
+      await loadResources();
+    });
+
+    async function loadResources() {
+      const res = await HopeApi.getResources();
+      const grid = document.getElementById('resourcesGrid');
+      if (res.ok && res.data.length > 0) {
+        grid.innerHTML = res.data.map(r => `
+          <div class="interactive-card text-right" style="border-top:5px solid var(--primary);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span class="badge-status active">${r.category === 'aac' ? 'تواصل AAC' : (r.category === 'schedules' ? 'جدول بصري' : 'تنظيم حسي')}</span>
+              <span style="font-size:0.85rem; color:#64748b; font-weight:bold;">${r.file_type.toUpperCase()}</span>
+            </div>
+
+            <h3 style="margin:4px 0 8px 0; font-size:1.2rem; color:var(--text-main);">${r.title}</h3>
+            <p style="color:var(--text-muted); font-size:0.95rem; line-height:1.5; min-height:50px;">${r.description}</p>
+            
+            <p style="font-size:0.85rem; color:#64748b; margin-bottom:14px;"><strong>أضيف بواسطة:</strong> ${r.added_by || 'إدارة المنصة'}</p>
+
+            <button class="btn btn-outline-primary" style="width:100%;" onclick="openResource('${r.title}')">
+              <i class="fa-solid fa-download"></i> معاينة وتحميل المورد
+            </button>
+          </div>
+        `).join('');
+      } else {
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#64748b;">لا توجد موارد في المكتبة حاليًا</div>';
+      }
+    }
+
+    function openAddResourceModal() {
+      document.getElementById('addResourceModal').style.display = 'flex';
+    }
+
+    function closeAddResourceModal() {
+      document.getElementById('addResourceModal').style.display = 'none';
+    }
+
+    async function handleCreateResource(e) {
+      e.preventDefault();
+      const payload = {
+        title: document.getElementById('resTitle').value.trim(),
+        category: document.getElementById('resCategory').value,
+        file_type: document.getElementById('resFileType').value,
+        description: document.getElementById('resDesc').value.trim(),
+        added_by: 'المعلم المسجل'
+      };
+
+      const res = await HopeApi.createResource(payload);
+      if (res.ok) {
+        AppCore.celebrate();
+        alert('تمت إضافة المورد بنجاح إلى مكتبة المنصة.');
+        closeAddResourceModal();
+        await loadResources();
+      } else {
+        alert(res.data.error || 'فشل حفظ المورد');
+      }
+    }
+
+    function openResource(title) {
+      AppCore.playSound('click');
+      alert(`جاري تجهيز وتحميل: "${title}". تم توفير المورد بصيغة قابلة للطباعة.`);
+    }
+  </script>
+</body>
+</html>
+

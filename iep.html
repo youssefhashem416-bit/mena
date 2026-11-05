@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الخطط التعليمية الفردية (IEP) | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-bullseye"></i> الخطط التعليمية الفردية (Individualized Education Program - IEP)
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;">
+          خطة مخصصة لكل طفل تراعي احتياجاته وقدراته بدقة: أهداف واضحة، خطوات تنفيذ، ومقاييس قابلة للمتابعة.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <select id="iepChildFilter" class="form-control" style="width: auto;" onchange="loadIepData()">
+          <option value="1">خطة الطفل عمر خالد (طيف توحد)</option>
+          <option value="2">خطة الطفلة نور سالم (متلازمة داون)</option>
+        </select>
+        <button class="btn btn-primary" onclick="openAddGoalModal()">
+          <i class="fa-solid fa-plus"></i> إضافة هدف تفصيلي للخطة
+        </button>
+      </div>
+    </div>
+
+    <!-- بطاقة الخطة النشطة وتفاصيل المراجعة -->
+    <div id="iepOverviewCard" class="interactive-card text-right" style="margin-bottom: 25px; border-top: 6px solid var(--primary); padding: 22px;">
+      <!-- Filled by JS -->
+    </div>
+
+    <!-- قائمة الأهداف التربوية الذكية SMART مع خطوات التحقيق والمتابعة -->
+    <section class="data-table-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0; font-size: 1.25rem;"><i class="fa-solid fa-list-check"></i> الأهداف التعليمية، خطوات التحقيق، ونتائج المتابعة</h3>
+        <span class="badge-status active">أهداف قابلة للقياس SMART</span>
+      </div>
+
+      <div id="goalsCardsList" style="display: flex; flex-direction: column; gap: 18px;">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal إضافة هدف جديد -->
+  <div id="addGoalModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+    <div class="interactive-card" style="background:#ffffff; max-width:650px; width:92%; padding:25px; border-radius:24px; text-align:right; max-height:90vh; overflow-y:auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 style="margin:0; color:var(--primary);"><i class="fa-solid fa-bullseye"></i> إضافة هدف تربوي للخطة الفردية</h3>
+        <button class="btn btn-sm btn-outline-danger" onclick="closeAddGoalModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleCreateGoal(event)">
+        <div class="form-group">
+          <label>نص الهدف التعليمي (SMART Goal)</label>
+          <textarea id="newGoalText" class="form-control" rows="2" placeholder="مثال: أن يسحب الطفل بطاقة أريد ماء ويسلمها للمعلم عند العطش بنسبة 80%..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>خطوات تحقيق الهدف الإجرائية</label>
+          <textarea id="newGoalSteps" class="form-control" rows="2" placeholder="1. لفت الانتباه للبطاقة، 2. مساعدة يد بيد، 3. تخفيف المساعدة تدريجيًا إلى إيماءة فقط..." required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>مستوى الصعوبة</label>
+            <select id="newGoalDifficulty" class="form-control">
+              <option value="مبتدئ">مبتدئ (مساعدة مستمرة)</option>
+              <option value="متوسط" selected>متوسط (تلميح خفيف)</option>
+              <option value="متقدم">متقدم (استقلالية تامة)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>المدة المقترحة</label>
+            <input type="text" id="newGoalDuration" class="form-control" placeholder="مثال: 4 أسابيع (12 جلسة)" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>معيار التحقق والنجاح</label>
+            <input type="text" id="newGoalCriteria" class="form-control" placeholder="مثال: 8 من 10 محاولات صحيحة" required>
+          </div>
+          <div class="form-group">
+            <label>تاريخ مراجعة الهدف</label>
+            <input type="date" id="newGoalDate" class="form-control" value="2026-12-30" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">
+          <i class="fa-solid fa-check"></i> اعتماد الهدف في الخطة الفردية
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    let activeChildId = 1;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('iep');
+      A11y.init();
+      await loadIepData();
+    });
+
+    async function loadIepData() {
+      activeChildId = Number(document.getElementById('iepChildFilter').value);
+
+      // 1. IEP Details
+      const iepRes = await HopeApi.getIeps(activeChildId);
+      const overviewCard = document.getElementById('iepOverviewCard');
+
+      if (iepRes.ok && iepRes.data.length > 0) {
+        const iep = iepRes.data[0];
+        overviewCard.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <span class="badge-status active">خطة فردية معتمدة ومراجعة</span>
+              <h2 style="margin:8px 0 4px 0; font-size:1.4rem; color:var(--text-main);">${iep.title}</h2>
+              <p style="margin:0; color:var(--text-muted); font-size:0.95rem;">
+                الفترة الزمنية: <strong>${iep.start_date} إلى ${iep.end_date}</strong> | تاريخ المراجعة القادم: <strong>2026-12-15</strong>
+              </p>
+            </div>
+            <div style="background:#eff6ff; padding:10px 18px; border-radius:14px; text-align:center;">
+              <strong style="color:var(--primary); font-size:1.1rem;">المستوى الحالي: مستوى ${activeChildId === 1 ? '1 (PECS Starter)' : '2 (تكوين جمل)'}</strong>
+              <div style="font-size:0.85rem; color:#64748b;">تحديث دوري حسب تقدم المهارات</div>
+            </div>
+          </div>
+          <p style="margin:14px 0 0 0; color:#334155; line-height:1.6; font-size:0.95rem; background:#f8fafc; padding:12px; border-radius:12px;">
+            <strong>ملخص الخطة ومحاور التركيز:</strong> ${iep.summary}
+          </p>
+        `;
+
+        // 2. Goals
+        const goalsRes = await HopeApi.getGoals(iep.id);
+        const listEl = document.getElementById('goalsCardsList');
+
+        if (goalsRes.ok && goalsRes.data.length > 0) {
+          listEl.innerHTML = goalsRes.data.map(g => `
+            <div style="background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:18px; padding:20px; text-align:right;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+                <div>
+                  <h4 style="margin:0 0 6px 0; font-size:1.2rem; color:var(--text-main);">${g.goal_text}</h4>
+                  <div style="display:flex; gap:12px; flex-wrap:wrap; font-size:0.88rem; color:#64748b; margin-bottom:8px;">
+                    <span><strong>مستوى الصعوبة:</strong> <span class="badge-status pending">${g.difficulty || 'متوسط'}</span></span>
+                    <span><strong>المعيار:</strong> <code>${g.criteria}</code></span>
+                    <span><strong>تاريخ المراجعة:</strong> ${g.target_date || '2026-12-15'}</span>
+                  </div>
+                </div>
+
+                <span class="badge-status ${g.status === 'achieved' ? 'achieved' : 'in_progress'}">
+                  ${g.status === 'achieved' ? 'تم الإنجاز بنجاح 🎉' : 'قيد التدريب والمتابعة 🔄'}
+                </span>
+              </div>
+
+              <!-- خطوات تحقيق الهدف -->
+              <div style="background:#ffffff; padding:12px 14px; border-radius:12px; margin:10px 0; font-size:0.9rem; color:#334155;">
+                <strong style="color:var(--primary);"><i class="fa-solid fa-stairs"></i> خطوات تحقيق الهدف:</strong>
+                <p style="margin:4px 0 0 0; line-height:1.5;">${g.steps || '1. النمذجة الإيمائية 2. الممارسة الموجهة 3. التدريب المستقل'}</p>
+              </div>
+
+              <!-- مؤشر التقدم وزر الاعتماد -->
+              <div style="display:flex; align-items:center; gap:15px; margin-top:14px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:200px; background:#e2e8f0; border-radius:999px; height:12px; overflow:hidden;">
+                  <div style="background:${g.status === 'achieved' ? 'var(--mint-green)' : 'var(--primary)'}; height:100%; width:${g.progress_percentage || 65}%;"></div>
+                </div>
+                <span style="font-weight:900; font-size:1.05rem;">${g.progress_percentage || 65}%</span>
+
+                ${g.status !== 'achieved' ? `
+                  <button class="btn btn-sm btn-outline-success" onclick="markGoalAchieved(${g.id})">
+                    <i class="fa-solid fa-check"></i> اعتماد إنجاز الهدف
+                  </button>
+                ` : '<span style="color:#16a34a; font-weight:bold;"><i class="fa-solid fa-award"></i> هدف منجز وموثق</span>'}
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    function openAddGoalModal() {
+      document.getElementById('addGoalModal').style.display = 'flex';
+    }
+
+    function closeAddGoalModal() {
+      document.getElementById('addGoalModal').style.display = 'none';
+    }
+
+    async function handleCreateGoal(e) {
+      e.preventDefault();
+      const payload = {
+        iep_id: activeChildId,
+        goal_text: document.getElementById('newGoalText').value.trim(),
+        steps: document.getElementById('newGoalSteps').value.trim(),
+        difficulty: document.getElementById('newGoalDifficulty').value,
+        criteria: document.getElementById('newGoalCriteria').value.trim(),
+        target_date: document.getElementById('newGoalDate').value,
+        status: 'in_progress',
+        progress_percentage: 25
+      };
+
+      const res = await HopeApi.createGoal(payload);
+      if (res.ok) {
+        AppCore.celebrate();
+        alert('تمت إضافة الهدف بنجاح إلى الخطة الفردية.');
+        closeAddGoalModal();
+        await loadIepData();
+      } else {
+        alert(res.data.error || 'فشل حفظ الهدف');
+      }
+    }
+
+    function markGoalAchieved(goalId) {
+      AppCore.celebrate();
+      AppCore.playSound('celebrate');
+      alert('تهانينا! تم اعتماد إنجاز الهدف التعليمي واحتسابه في سجل تقدم الطفل.');
+      loadIepData();
+    }
+  </script>
+</body>
+</html>

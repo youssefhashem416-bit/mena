@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>واجهة الطفل البطل وعالم المكافآت | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <style>
+    @media print {
+      header, .no-print, nav, button { display: none !important; }
+      body { background: #ffffff !important; }
+      .printable-cert-card { box-shadow: none !important; border: 4px double #d97706 !important; }
+    }
+  </style>
+</head>
+<body class="child-mode">
+  <header></header>
+
+  <main class="container" style="margin-top: 25px; margin-bottom: 60px;">
+    
+    <!-- بانر ترحيبي بهيج ومخصص للطفل -->
+    <section class="interactive-card text-center no-print" style="background: linear-gradient(135deg, #fef9c3 0%, #e0f2fe 100%); padding: 30px 20px; border-radius: 28px;">
+      <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 10px;">
+        <span class="animate__animated animate__bounce animate__infinite" style="font-size: 50px;">🎈</span>
+        <h1 style="font-size: 2.2rem; margin: 0; color: var(--primary);" id="childGreetingTitle">
+          أهلاً بك يا بطلنا الجميل! 🌟
+        </h1>
+        <span class="animate__animated animate__bounce animate__infinite" style="font-size: 50px;">⭐</span>
+      </div>
+      
+      <p style="font-size: 1.2rem; color: var(--text-main); font-weight: 700;">
+        تعلم والعب واجمع النجوم الذهبية والأوسمة الرائعة!
+      </p>
+
+      <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; flex-wrap: wrap;">
+        <div style="background: #ffffff; padding: 10px 24px; border-radius: 999px; box-shadow: var(--shadow-toy); font-size: 1.4rem; font-weight: 900; color: #d97706;">
+          <i class="fa-solid fa-star"></i> رصيد النجوم: <span id="starsDisplay">110</span>
+        </div>
+        <button class="btn btn-lg btn-success" onclick="playVoiceGreeting()">
+          <i class="fa-solid fa-volume-high"></i> اسمع الترحيب 🔊
+        </button>
+        <button class="btn btn-lg btn-outline-primary" id="quietModeBtn" onclick="toggleQuietMode()">
+          <i class="fa-solid fa-feather"></i> الوضع الهادئ (Quiet Mode) 🍃
+        </button>
+      </div>
+    </section>
+
+    <!-- أقسام الأنشطة التفاعلية -->
+    <section class="no-print" style="margin-top: 35px;">
+      <h2 style="font-size: 1.4rem; margin-bottom: 20px; color: var(--text-main);">
+        <i class="fa-solid fa-gamepad"></i> الأنشطة التفاعلية الممتعة
+      </h2>
+
+      <div class="row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+        
+        <!-- فقاعات الهدوء الحسي -->
+        <div class="interactive-card text-center" onclick="openBubbleGame()" style="cursor: pointer; border-bottom: 8px solid #38bdf8;">
+          <div style="font-size: 65px; margin-bottom: 10px;">🫧</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 8px; color: #0284c7;">فقاعات الهدوء الحسي</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">فرقع الفقاعات الملونة بإصبعك واستمتع بأصوات لطيفة ومهدئة.</p>
+          <button class="btn btn-primary" style="border-radius: 999px; width: 100%;">العب الآن 🫧</button>
+        </div>
+
+        <!-- بطاقات التواصل AAC -->
+        <div class="interactive-card text-center" onclick="window.location.href='aac.html'" style="cursor: pointer; border-bottom: 8px solid #6366f1;">
+          <div style="font-size: 65px; margin-bottom: 10px;">🗂️</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 8px; color: #4f46e5;">لوحة بطاقات التواصل</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">تحدث بالصور: أريد أن آكل، أريد أن أشرب، أريد المساعدة.</p>
+          <button class="btn btn-primary" style="border-radius: 999px; width: 100%; background: #6366f1;">تحدث بالصور 🗣️</button>
+        </div>
+
+        <!-- بنك الأنشطة التفاعلية -->
+        <div class="interactive-card text-center" onclick="window.location.href='activities.html'" style="cursor: pointer; border-bottom: 8px solid #ec4899;">
+          <div style="font-size: 65px; margin-bottom: 10px;">🧩</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 8px; color: #db2777;">بنك الألعاب والألغاز</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">ألعاب المطابقة، الحروف، والأرقام مع مساعدة تدريجية.</p>
+          <button class="btn btn-primary" style="border-radius: 999px; width: 100%; background: #ec4899;">استكشف الألعاب 🎮</button>
+        </div>
+
+        <!-- المهارات الحياتية -->
+        <div class="interactive-card text-center" onclick="window.location.href='life-skills.html'" style="cursor: pointer; border-bottom: 8px solid #10b981;">
+          <div style="font-size: 65px; margin-bottom: 10px;">🧼</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 8px; color: #059669;">بطل المهارات الحياتية</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">خطوات النظافة والاستقلالية اليومية بالصور والصوت.</p>
+          <button class="btn btn-primary" style="border-radius: 999px; width: 100%; background: #10b981;">خطواتي اليومية 🌟</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- منطقة فرقعة الفقاعات الفورية -->
+    <section id="bubbleSection" class="no-print" style="margin-top: 40px; background: #ffffff; border-radius: 28px; padding: 25px; box-shadow: var(--shadow-card); text-align: center;">
+      <h3 style="font-size: 1.35rem; color: #0284c7; margin-top: 0;">
+        <i class="fa-solid fa-soap"></i> منطقة فرقعة الفقاعات الفورية: المس الفقاعة لتفرقعها وتكسب النجوم!
+      </h3>
+      <div id="bubblesPlayground" style="min-height: 180px; display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; padding: 15px;">
+        <!-- Bubbles generated here -->
+      </div>
+    </section>
+
+    <!-- قسم النجوم والجوائز والأوسمة المكتسبة -->
+    <section class="no-print" style="margin-top: 40px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2 style="font-size: 1.4rem; margin: 0; color: var(--text-main);">
+          <i class="fa-solid fa-award"></i> سجل النجوم والجوائز المكتسبة (سجل الإنجازات)
+        </h2>
+        <span class="badge-status active">إنجازات البطل</span>
+      </div>
+
+      <div class="row" id="rewardsDisplayGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+    <!-- قسم شهادات الإنجاز القابلة للطباعة -->
+    <section style="margin-top: 45px;">
+      <div class="no-print" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2 style="font-size: 1.4rem; margin: 0; color: #b45309;">
+          <i class="fa-solid fa-certificate"></i> شهادات الإنجاز والتميز المعتمدة (جاهزة للطباعة 🖨️)
+        </h2>
+        <button class="btn btn-outline-warning" onclick="window.print()" style="background:#fef3c7; color:#854d0e; font-weight:bold;">
+          <i class="fa-solid fa-print"></i> طباعة الشهادة للتعليق في الغرفة
+        </button>
+      </div>
+
+      <div id="certificatesContainer">
+        <!-- Rendered printable certificate card -->
+      </div>
+    </section>
+
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    let currentStars = 110;
+    let isQuietMode = false;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('child-zone');
+      A11y.init();
+      AppCore.initAudio();
+
+      generateBubbles();
+      await loadRewardsAndCerts();
+
+      const session = HopeApi.getCurrentSession();
+      if (session && session.fullName) {
+        document.getElementById('childGreetingTitle').innerText = `أهلاً بك يا بطلنا ${session.fullName}! 🌟`;
+      }
+
+      setTimeout(() => {
+        playVoiceGreeting();
+      }, 1000);
+    });
+
+    async function loadRewardsAndCerts() {
+      // 1. Rewards
+      const rewRes = await HopeApi.getRewards(1);
+      const grid = document.getElementById('rewardsDisplayGrid');
+      if (rewRes.ok && rewRes.data.length > 0) {
+        grid.innerHTML = rewRes.data.map(r => `
+          <div class="interactive-card text-right animate__animated animate__zoomIn" style="border-right:5px solid #f59e0b; padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:35px; color:#f59e0b;"><i class="fa-solid ${r.badge_icon || 'fa-star'}"></i></span>
+              <span class="badge-status achieved">+${r.points || 20} نقطة</span>
+            </div>
+            <h4 style="margin:8px 0 4px 0; font-size:1.15rem; color:var(--text-main);">${r.badge_name}</h4>
+            <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">${r.reason}</p>
+          </div>
+        `).join('');
+      }
+
+      // 2. Certificates
+      const certRes = await HopeApi.getCertificates(1);
+      const certBox = document.getElementById('certificatesContainer');
+      if (certRes.ok && certRes.data.length > 0) {
+        const cert = certRes.data[0];
+        certBox.innerHTML = `
+          <div class="interactive-card printable-cert-card" style="background: radial-gradient(circle, #fffdf0 0%, #ffffff 100%); border: 4px double #d97706; border-radius: 28px; padding: 40px; text-align: center; max-width: 780px; margin: 0 auto; box-shadow: 0 15px 35px rgba(217, 119, 6, 0.15);">
+            <div style="font-size: 60px; margin-bottom: 10px;">🏆</div>
+            <span style="font-size: 1.1rem; color: #b45309; font-weight: 800; letter-spacing: 2px;">بصمة أمل | HOPE TOUCH</span>
+            <h2 style="font-size: 2.2rem; color: #78350f; margin: 10px 0 6px 0;">${cert.title}</h2>
+            <p style="font-size: 1.25rem; color: #1e293b; margin: 0;">يُشهد بأن البطل الرائع:</p>
+            <h3 style="font-size: 2rem; color: var(--primary); margin: 8px 0 12px 0;">عمر خالد المنصور ⭐</h3>
+            <p style="font-size: 1.15rem; color: #475569; max-width: 580px; margin: 0 auto 20px auto; line-height: 1.6;">
+              ${cert.message}
+            </p>
+            <div style="display:flex; justify-content:space-around; border-top: 2px dashed #fcd34d; padding-top: 20px; margin-top: 25px;">
+              <div>
+                <strong style="color:#78350f;">التاريخ</strong>
+                <p style="margin:4px 0 0 0; color:#64748b;">${cert.issued_date}</p>
+              </div>
+              <div>
+                <strong style="color:#78350f;">نسبة الإتقان</strong>
+                <p style="margin:4px 0 0 0; color:#16a34a; font-weight:900; font-size:1.2rem;">${cert.score || '100%'}</p>
+              </div>
+              <div>
+                <strong style="color:#78350f;">الأخصائي المشرف</strong>
+                <p style="margin:4px 0 0 0; color:#64748b;">${cert.teacher_name}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function playVoiceGreeting() {
+      if (isQuietMode) return;
+      const session = HopeApi.getCurrentSession();
+      const name = session ? session.fullName : 'يا بطل';
+      SpeechEngine.speak(`مرحبًا بك ${name}! أنت بطل رائع ونحن فخورون بكل إنجاز تحققه.`);
+      AppCore.playSound('boing');
+    }
+
+    function toggleQuietMode() {
+      isQuietMode = !isQuietMode;
+      document.body.classList.toggle('sensory-calm', isQuietMode);
+      const btn = document.getElementById('quietModeBtn');
+      if (isQuietMode) {
+        btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> الوضع الهادئ مفعل 🍃';
+        btn.classList.replace('btn-outline-primary', 'btn-warning');
+        SpeechEngine.stop();
+      } else {
+        btn.innerHTML = '<i class="fa-solid fa-feather"></i> الوضع الهادئ (Quiet Mode) 🍃';
+        btn.classList.replace('btn-warning', 'btn-outline-primary');
+        SpeechEngine.speak('تم تفعيل الوضع التفاعلي المبهج.');
+      }
+    }
+
+    function generateBubbles() {
+      const playground = document.getElementById('bubblesPlayground');
+      playground.innerHTML = '';
+      const colors = ['#38bdf8', '#818cf8', '#f472b6', '#4ade80', '#fbbf24'];
+
+      for (let i = 0; i < 7; i++) {
+        const bubble = document.createElement('div');
+        const color = colors[i % colors.length];
+        bubble.className = 'interactive-card animate__animated animate__pulse animate__infinite';
+        bubble.style.cssText = `
+          width: 85px;
+          height: 85px;
+          border-radius: 50%;
+          background: radial-gradient(circle at 30% 30%, #ffffff, ${color});
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 28px;
+          cursor: pointer;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+          user-select: none;
+        `;
+        bubble.innerText = '🫧';
+        bubble.onclick = function() {
+          popBubble(bubble);
+        };
+        playground.appendChild(bubble);
+      }
+    }
+
+    function popBubble(element) {
+      if (!isQuietMode) AppCore.playSound('pop');
+      element.classList.remove('animate__pulse');
+      element.classList.add('animate__zoomOut');
+      currentStars += 5;
+      document.getElementById('starsDisplay').innerText = currentStars;
+
+      setTimeout(() => {
+        element.style.visibility = 'hidden';
+      }, 300);
+
+      // Re-generate if all popped
+      setTimeout(() => {
+        const remaining = document.querySelectorAll('#bubblesPlayground div[style*="visibility: hidden"]');
+        if (remaining.length >= 7) {
+          if (!isQuietMode) {
+            AppCore.celebrate();
+            AppCore.playSound('celebrate');
+            SpeechEngine.speak('ممتاز جدًا! أحسنت يا بطل!');
+          }
+          generateBubbles();
+        }
+      }, 500);
+    }
+
+    function openBubbleGame() {
+      document.getElementById('bubbleSection').scrollIntoView({ behavior: 'smooth' });
+      if (!isQuietMode) SpeechEngine.speak('المس الفقاعات لتفرقعها وتكسب النجوم!');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الأنشطة التعليمية التفاعلية والمساعدة التدريجية | بصمة أمل - HOPE TOUCH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/accessibility.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+</head>
+<body>
+  <header></header>
+
+  <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+      <div>
+        <h1 style="font-size: 1.8rem; margin: 0; color: var(--primary);">
+          <i class="fa-solid fa-shapes"></i> بنك الأنشطة التفاعلية ونظام المساعدة التدريجية
+        </h1>
+        <p style="color: var(--text-muted); margin: 4px 0 0 0;">
+          أنشطة تفاعلية حقيقية مع سلم مساعدة مرن يوثق نمو استقلالية الطفل دون عقاب أو إحباط.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <button class="btn btn-outline-primary" onclick="toggleCalmMode()">
+          <i class="fa-solid fa-feather"></i> الوضع الهادئ (Quiet Mode) 🍃
+        </button>
+        <div style="background: #ffffff; padding: 8px 18px; border-radius: 999px; box-shadow: var(--shadow-card); font-weight: 800; color: #d97706;">
+          <i class="fa-solid fa-star"></i> رصيد النجوم: <span id="currentPointsText">90</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- شريط التصفية حسب الإعاقة والفئة العمرية -->
+    <div class="interactive-card" style="padding: 18px; margin-bottom: 25px;">
+      <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 180px;">
+          <label style="font-weight: 700; margin-bottom: 4px; display: block;">الفئة المستهدفة:</label>
+          <select id="actDisabilityFilter" class="form-control" onchange="filterActivities()">
+            <option value="all">جميع الفئات</option>
+            <option value="autism">طيف التوحد (ASD) 🧩</option>
+            <option value="down">متلازمة داون (Down) 🌟</option>
+          </select>
+        </div>
+
+        <div style="flex: 1; min-width: 180px;">
+          <label style="font-weight: 700; margin-bottom: 4px; display: block;">الفئة العمرية:</label>
+          <select id="actAgeFilter" class="form-control" onchange="filterActivities()">
+            <option value="all">جميع الأعمار (3 - 12)</option>
+            <option value="3-5">3 - 5 سنوات (التدخل المبكر)</option>
+            <option value="6-8">6 - 8 سنوات</option>
+            <option value="9-12">9 - 12 سنة</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- منطقة النشاط التفاعلي الحي المفتوح -->
+    <section id="activePlayArea" style="display:none; margin-bottom:35px; background:#ffffff; border-radius:28px; padding:30px; box-shadow:var(--shadow-card); text-align:center; border: 3px solid var(--primary);">
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+        <span class="badge-status active" id="activeCategoryBadge">نشاط تفاعلي</span>
+        <button class="btn btn-sm btn-outline-danger" onclick="closePlayArea()"><i class="fa-solid fa-xmark"></i> إغلاق النشاط</button>
+      </div>
+
+      <h2 id="activeActivityTitle" style="color:var(--primary); margin: 0 0 6px 0; font-size:1.6rem;"></h2>
+      <p id="activeActivityDesc" style="color:var(--text-muted); font-size:1.1rem; margin-bottom:20px;"></p>
+      
+      <!-- منصة اللعبة التفاعلية الحقيقية -->
+      <div id="gamePlayCanvas" style="min-height:220px; background:#f8fafc; border-radius:20px; padding:25px; margin-bottom:20px; display:flex; justify-content:center; align-items:center; flex-direction:column;">
+        <!-- Filled by JS -->
+      </div>
+
+      <!-- سلم المساعدة التدريجية (Graduated Assistance Bar) -->
+      <div style="background:#eff6ff; border-radius:18px; padding:15px; text-align:right;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+          <strong style="color:var(--primary); font-size:0.95rem;">
+            <i class="fa-solid fa-handshake-angle"></i> سلم المساعدة التدريجية (عند مواجهة صعوبة):
+          </strong>
+          <span style="font-size:0.85rem; color:#64748b;" id="currentHelpTypeBadge">المساعدة الحالية: استقلالية تامة</span>
+        </div>
+        
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="requestAssistance('re_explain')">
+            1. إعادة الشرح ℹ️
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="requestAssistance('visual_hint')">
+            2. تلميح بصري 👁️
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="requestAssistance('audio_hint')">
+            3. تلميح صوتي 🔊
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="requestAssistance('reduce_options')">
+            4. تقليل الخيارات ✂️
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="requestAssistance('modeling')">
+            5. مثال توضيحي 💡
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- شبكة بطاقات الأنشطة المتاحة -->
+    <div id="activitiesGrid" class="row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px;">
+      <!-- Filled by JS -->
+    </div>
+
+  </main>
+
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/accessibility.js"></script>
+  <script src="assets/js/api-client.js"></script>
+  <script>
+    let allActivities = [];
+    let currentActiveActivity = null;
+    let currentHelpLevel = 'none'; // 'none', 're_explain', 'visual_hint', 'audio_hint', 'reduce_options', 'modeling'
+    let currentCorrectAnswer = null;
+
+    const RICH_GAMES = {
+      // 1. مطابقة الصور والأشكال (طيف التوحد - 3-5)
+      match_shapes: {
+        id: 101,
+        title: 'مطابقة الأشكال والألوان الأساسية 🎨',
+        disability: 'autism',
+        age_group: '3-5',
+        desc: 'طابق الدائرة الزرقاء مع مكانها الصحيح!',
+        question: 'أين الدائرة الزرقاء المطابقة؟',
+        correct: 'circle',
+        audio_prompt: 'المس الدائرة الزرقاء لمطابقتها!',
+        options: [
+          { id: 'square', label: 'مربع أصفر 🟨', isCorrect: false },
+          { id: 'circle', label: 'دائرة زرقاء 🔵', isCorrect: true },
+          { id: 'triangle', label: 'مثلث أحمر 🔺', isCorrect: false }
+        ]
+      },
+      // 2. تصنيف الأشياء (فواكه مقابل حيوانات - طيف التوحد - 6-8)
+      classify_items: {
+        id: 102,
+        title: 'تصنيف الأبطال: اختر الفاكهة اللذيذة 🍎',
+        disability: 'autism',
+        age_group: '6-8',
+        desc: 'ميز بين الفواكه والحيوانات واختر الفاكهة المناسبة.',
+        question: 'أي من هذه الأشياء يُعتبر فاكهة نأكلها؟',
+        correct: 'apple',
+        audio_prompt: 'اختر الفاكهة اللذيذة من بين الصور!',
+        options: [
+          { id: 'cat', label: 'قطة لطيفة 🐱', isCorrect: false },
+          { id: 'apple', label: 'تفاحة حمراء 🍎', isCorrect: true },
+          { id: 'car', label: 'سيارة زرقاء 🚗', isCorrect: false }
+        ]
+      },
+      // 3. التعرف على المشاعر (طيف التوحد - 6-8 و 9-12)
+      emotions_lab: {
+        id: 103,
+        title: 'مختبر المشاعر: من هو السعيد؟ 😊',
+        disability: 'autism',
+        age_group: '6-8',
+        desc: 'تعرف على تعبير الوجه السعيد والمبتسم.',
+        question: 'صديقنا حصل على هدية جميلة، أي وجه يعبر عن شعوره؟',
+        correct: 'happy',
+        audio_prompt: 'أي من الأصدقاء يبدو سعيدًا ومبتسمًا؟',
+        options: [
+          { id: 'sad', label: 'وجه حزين 😢', isCorrect: false },
+          { id: 'happy', label: 'وجه سعيد مبتسم 😊', isCorrect: true },
+          { id: 'angry', label: 'وجه غاضب 😠', isCorrect: false }
+        ]
+      },
+      // 4. الحروف والكلمات الأولى (متلازمة داون - 3-5)
+      letters_down: {
+        id: 104,
+        title: 'صديق الحروف: حرف الألف (أ) 🅰️',
+        disability: 'down',
+        age_group: '3-5',
+        desc: 'استمع لحرف الألف واختر الكلمة التي تبدأ به.',
+        question: 'أي صورة تبدأ بحرف الألف (أ) مثل أرنب؟',
+        correct: 'rabbit',
+        audio_prompt: 'أ.. أرنب! اختر الأرنب الجميل!',
+        options: [
+          { id: 'rabbit', label: 'أرنب يقفز 🐰', isCorrect: true },
+          { id: 'duck', label: 'بطة تسبح 🦆', isCorrect: false },
+          { id: 'fish', label: 'سمكة سريعة 🐟', isCorrect: false }
+        ]
+      },
+      // 5. الأرقام والعد التفاعلي (متلازمة داون - 6-8)
+      count_numbers: {
+        id: 105,
+        title: 'عد النجوم الذهبية الذكية 🔢',
+        disability: 'down',
+        age_group: '6-8',
+        desc: 'عد النجوم الثلاث اللامعة واختر الرقم المطابق.',
+        question: 'كم نجمة تراها هنا؟ ⭐ ⭐ ⭐',
+        correct: 'num3',
+        audio_prompt: 'واحد.. اثنان.. ثلاثة! اختر الرقم 3!',
+        options: [
+          { id: 'num1', label: 'الرقم 1', isCorrect: false },
+          { id: 'num3', label: 'الرقم 3 🌟', isCorrect: true },
+          { id: 'num5', label: 'الرقم 5', isCorrect: false }
+        ]
+      },
+      // 6. العمليات الحسابية البسيطة (متلازمة داون - 9-12)
+      math_simple: {
+        id: 106,
+        title: 'الجمع المرح: 1 تفاحة + 1 تفاحة ➕',
+        disability: 'down',
+        age_group: '9-12',
+        desc: 'كم يصبح المجموع: 🍎 + 🍎؟',
+        question: 'تفاحة واحدة زائد تفاحة أخرى، كم تفاحة لدينا الآن؟',
+        correct: 'two',
+        audio_prompt: 'واحد زائد واحد يساوي اثنان!',
+        options: [
+          { id: 'one', label: '1 تفاحة', isCorrect: false },
+          { id: 'two', label: '2 تفاحتان 🍎🍎', isCorrect: true },
+          { id: 'four', label: '4 تفاحات', isCorrect: false }
+        ]
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      HopeApi.renderHeader('activities');
+      A11y.init();
+      AppCore.initAudio();
+      await loadActivities();
+    });
+
+    async function loadActivities() {
+      const res = await HopeApi.getActivities();
+      if (res.ok) {
+        allActivities = res.data;
+        renderActivitiesGrid();
+      }
+    }
+
+    function renderActivitiesGrid() {
+      const grid = document.getElementById('activitiesGrid');
+      const gameKeys = Object.keys(RICH_GAMES);
+      
+      grid.innerHTML = gameKeys.map(k => {
+        const g = RICH_GAMES[k];
+        return `
+          <div class="interactive-card text-right" style="border-top:6px solid ${g.disability === 'autism' ? '#2563eb' : '#d97706'};">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span class="badge-status ${g.disability === 'autism' ? 'active' : 'assigned'}">
+                ${g.disability === 'autism' ? 'طيف التوحد 🧩' : 'متلازمة داون 🌟'}
+              </span>
+              <span class="badge-status pending">${g.age_group} سنوات</span>
+            </div>
+
+            <h3 style="margin:0 0 8px 0; font-size:1.25rem;">${g.title}</h3>
+            <p style="color:var(--text-muted); font-size:0.95rem; line-height:1.5; min-height:48px;">${g.desc}</p>
+
+            <button class="btn btn-primary" style="width:100%; border-radius:999px; margin-top:10px;" onclick="openInteractiveGame('${k}')">
+              <i class="fa-solid fa-play"></i> بدء النشاط التفاعلي 🎮
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterActivities() {
+      const dis = document.getElementById('actDisabilityFilter').value;
+      const age = document.getElementById('actAgeFilter').value;
+      const grid = document.getElementById('activitiesGrid');
+      
+      const filteredKeys = Object.keys(RICH_GAMES).filter(k => {
+        const g = RICH_GAMES[k];
+        const matchDis = dis === 'all' || g.disability === dis;
+        const matchAge = age === 'all' || g.age_group === age;
+        return matchDis && matchAge;
+      });
+
+      if (filteredKeys.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:30px; color:#64748b;">لا توجد أنشطة مطابقة</div>';
+        return;
+      }
+
+      grid.innerHTML = filteredKeys.map(k => {
+        const g = RICH_GAMES[k];
+        return `
+          <div class="interactive-card text-right" style="border-top:6px solid ${g.disability === 'autism' ? '#2563eb' : '#d97706'};">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span class="badge-status ${g.disability === 'autism' ? 'active' : 'assigned'}">
+                ${g.disability === 'autism' ? 'طيف التوحد 🧩' : 'متلازمة داون 🌟'}
+              </span>
+              <span class="badge-status pending">${g.age_group} سنوات</span>
+            </div>
+            <h3 style="margin:0 0 8px 0; font-size:1.25rem;">${g.title}</h3>
+            <p style="color:var(--text-muted); font-size:0.95rem; line-height:1.5; min-height:48px;">${g.desc}</p>
+            <button class="btn btn-primary" style="width:100%; border-radius:999px; margin-top:10px;" onclick="openInteractiveGame('${k}')">
+              <i class="fa-solid fa-play"></i> بدء النشاط التفاعلي 🎮
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openInteractiveGame(key) {
+      const g = RICH_GAMES[key];
+      currentActiveActivity = g;
+      currentHelpLevel = 'none';
+      currentCorrectAnswer = g.correct;
+
+      const playArea = document.getElementById('activePlayArea');
+      document.getElementById('activeActivityTitle').innerText = g.title;
+      document.getElementById('activeActivityDesc').innerText = g.question;
+      document.getElementById('activeCategoryBadge').innerText = g.disability === 'autism' ? 'طيف التوحد 🧩' : 'متلازمة داون 🌟';
+      document.getElementById('currentHelpTypeBadge').innerText = 'المساعدة الحالية: استقلالية تامة (بدون مساعدة)';
+
+      renderGameCanvas(g);
+
+      playArea.style.display = 'block';
+      playArea.scrollIntoView({ behavior: 'smooth' });
+
+      AppCore.playSound('boing');
+      SpeechEngine.speak(g.audio_prompt);
+    }
+
+    function renderGameCanvas(g) {
+      const canvas = document.getElementById('gamePlayCanvas');
+      canvas.innerHTML = `
+        <div style="font-size:1.25rem; font-weight:800; color:var(--text-main); margin-bottom:20px;">
+          ${g.question}
+        </div>
+        <div id="gameOptionsContainer" style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; width:100%;">
+          ${g.options.map(opt => `
+            <button id="optBtn_${opt.id}" class="btn btn-lg interactive-card animate__animated animate__fadeIn" onclick="handleOptionChoice('${opt.id}', ${opt.isCorrect})" style="font-size:1.3rem; padding:20px 30px; border-radius:20px; box-shadow:var(--shadow-toy); min-width:160px;">
+              ${opt.label}
+            </button>
+          `).join('')}
+        </div>
+        <div id="gentleEncouragementBox" style="margin-top:15px; font-weight:bold; font-size:1.1rem; min-height:30px;"></div>
+      `;
+    }
+
+    // سلم المساعدة التدريجية (Graduated Prompting)
+    function requestAssistance(level) {
+      currentHelpLevel = level;
+      const badge = document.getElementById('currentHelpTypeBadge');
+      const g = currentActiveActivity;
+      if (!g) return;
+
+      AppCore.playSound('pop');
+
+      if (level === 're_explain') {
+        badge.innerText = 'المساعدة الحالية: إعادة شرح التعليمات ℹ️';
+        SpeechEngine.speak('اسمعني جيدًا يا بطل: ' + g.audio_prompt);
+      } else if (level === 'visual_hint') {
+        badge.innerText = 'المساعدة الحالية: تلميح بصري (وميض) 👁️';
+        SpeechEngine.speak('انظر إلى الزر الذي يلمع بلون ذهبي!');
+        const correctBtn = document.getElementById(`optBtn_${g.correct}`);
+        if (correctBtn) {
+          correctBtn.classList.add('animate__pulse', 'animate__infinite');
+          correctBtn.style.border = '4px solid #facc15';
+        }
+      } else if (level === 'audio_hint') {
+        badge.innerText = 'المساعدة الحالية: تلميح صوتي ناطق 🔊';
+        const correctOpt = g.options.find(o => o.isCorrect);
+        SpeechEngine.speak(`تلميح صوتي: الإجابة هي ${correctOpt.label}`);
+      } else if (level === 'reduce_options') {
+        badge.innerText = 'المساعدة الحالية: تقليل الخيارات ✂️';
+        SpeechEngine.speak('لقد قمنا بإزالة أحد الاختيارات الخاطئة لمساعدتك!');
+        const wrongOpt = g.options.find(o => !o.isCorrect);
+        if (wrongOpt) {
+          const btn = document.getElementById(`optBtn_${wrongOpt.id}`);
+          if (btn) btn.style.display = 'none';
+        }
+      } else if (level === 'modeling') {
+        badge.innerText = 'المساعدة الحالية: عرض مثال توضيحي (نمذجة) 💡';
+        const correctOpt = g.options.find(o => o.isCorrect);
+        SpeechEngine.speak(`شاهد النموذج التوضيحي: نختار ${correctOpt.label} لنكون أبطالاً فائزين!`);
+        const correctBtn = document.getElementById(`optBtn_${g.correct}`);
+        if (correctBtn) {
+          correctBtn.style.background = '#dcfce7';
+          correctBtn.style.borderColor = '#16a34a';
+        }
+      }
+    }
+
+    // الاختيار والتعامل اللطيف مع الخطأ
+    async function handleOptionChoice(chosenId, isCorrect) {
+      const box = document.getElementById('gentleEncouragementBox');
+
+      if (isCorrect) {
+        // إجابة صحيحة: احتفال مبهج
+        const praises = ['أحسنت يا بطل! 🌟', 'برافو عليك! إجابة رائعة! 🎉', 'أنت تتقدم وتتعلم بذكاء! ⭐'];
+        const praise = praises[Math.floor(Math.random() * praises.length)];
+
+        box.style.color = '#16a34a';
+        box.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${praise}`;
+
+        AppCore.celebrate();
+        AppCore.playSound('celebrate');
+        SpeechEngine.speak(praise);
+
+        // إضافة النقاط
+        const pts = Number(document.getElementById('currentPointsText').innerText) + 20;
+        document.getElementById('currentPointsText').innerText = pts;
+
+        // تسجيل المحاولة في الـ Backend وتوثيق المساعدة
+        await HopeApi.recordAttempt({
+          activityId: currentActiveActivity.id,
+          score: 100,
+          duration: 25,
+          helpType: currentHelpLevel,
+          promptNotes: `تم إنجاز النشاط بنجاح مع مستوى مساعدة: ${currentHelpLevel}`,
+          success: true
+        });
+
+      } else {
+        // إجابة خاطئة: تشجيع لطيف دون عقاب أو أصوات مزعجة
+        box.style.color = '#d97706';
+        box.innerHTML = `<i class="fa-solid fa-heart" style="color:#f43f5e;"></i> فكرة جميلة! جرب مرة أخرى يا بطل، يمكنك طلب تلميح من سلم المساعدة بالأسفل.`;
+
+        AppCore.playSound('pop');
+        SpeechEngine.speak('محاولة جميلة! جرب مرة ثانية، أو اطلب مساعدة من الأزرار بالأسفل.');
+
+        // تسجيل المحاولة مع الملاحظة
+        await HopeApi.recordAttempt({
+          activityId: currentActiveActivity.id,
+          score: 50,
+          duration: 15,
+          helpType: currentHelpLevel,
+          promptNotes: 'محاولة أولى غير مكتملة، تم تقديم تشجيع لطيف',
+          success: false
+        });
+      }
+    }
+
+    function closePlayArea() {
+      document.getElementById('activePlayArea').style.display = 'none';
+      currentActiveActivity = null;
+    }
+
+    function toggleCalmMode() {
+      document.body.classList.toggle('sensory-calm');
+      const isCalm = document.body.classList.contains('sensory-calm');
+      AppCore.playSound('pop');
+      SpeechEngine.speak(isCalm ? 'تم تفعيل الوضع الهادئ لتخفيف المثيرات.' : 'تم استعادة الوضع التفاعلي.');
+    }
+  </script>
+</body>
+</html>
