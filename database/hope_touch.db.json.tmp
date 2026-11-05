@@ -1,0 +1,691 @@
+{
+  "roles": [
+    {
+      "id": 1,
+      "name": "admin",
+      "label_ar": "المدير",
+      "permissions": [
+        "all"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "teacher",
+      "label_ar": "المعلم / الأخصائي",
+      "permissions": [
+        "children.manage",
+        "assessments.all",
+        "ieps.all",
+        "activities.manage",
+        "sessions.all",
+        "notes.all",
+        "reports.view"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "parent",
+      "label_ar": "ولي الأمر",
+      "permissions": [
+        "child.view_own",
+        "home_activities.view_update",
+        "notes.view_own",
+        "reports.view_own"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "child",
+      "label_ar": "الطفل البطل",
+      "permissions": [
+        "activities.play",
+        "journey.view_own",
+        "rewards.view_own"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "email": "admin@hopetouch.edu",
+      "password_hash": "f5ab09e6278461ba13ed1e1b48ed5f0c011288b73dcd97a326f60061dfcaea1c7b528aabeda1fe1ba81fccdc19bd8deb51222ef802bab1b1193c8f77a173fbda",
+      "salt": "7aea912f2934047968bf3a43ddc0a4d4",
+      "role_id": 1,
+      "full_name": "د. عبد الله الشمري (المدير الإداري)",
+      "phone": "0501112233",
+      "is_active": true,
+      "created_at": "2026-11-05T15:57:43.132Z"
+    },
+    {
+      "id": 2,
+      "username": "teacher_sarah",
+      "email": "sarah@hopetouch.edu",
+      "password_hash": "b9baf1f829044132a194381f9161f78ba308851b6a34c368f955f7dbe45fd5df31d6587a4e9e5df7db2b3a7db39e2b8bae8d1ac19f980dde6540dc9183a1c93a",
+      "salt": "8ef6093f09be5139e2759ec77d1ea844",
+      "role_id": 2,
+      "full_name": "أ. سارة الأحمد (أخصائية نطق وتخاطب وتربية خاصة)",
+      "phone": "0502223344",
+      "is_active": true,
+      "created_at": "2026-11-05T15:57:43.132Z"
+    },
+    {
+      "id": 3,
+      "username": "parent_khalid",
+      "email": "khalid@gmail.com",
+      "password_hash": "193c929f7446672a47b8cb6c873fe7859845160df787336935361c58936e8cd431867fced9c1a35e75eaef4634e4348d221ba0926c2f964f1eaae33af4e7d8db",
+      "salt": "9ef51fddfa37bea4d6daaeb1ca62dd74",
+      "role_id": 3,
+      "full_name": "خالد المنصور (ولي أمر)",
+      "phone": "0503334455",
+      "is_active": true,
+      "created_at": "2026-11-05T15:57:43.132Z"
+    },
+    {
+      "id": 4,
+      "username": "child_omar",
+      "email": "omar@hopetouch.edu",
+      "password_hash": "54a45a735e0897b22db5d8f7b843bd6becbf9eec9d48758351daf91d7f58f18188027327440c2bde4924020664d04e54bfdb304e6b2e727c8b49e6ac6cf38e8d",
+      "salt": "f5f00a599cf558147182eabee845f355",
+      "role_id": 4,
+      "full_name": "عمر خالد المنصور",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-11-05T15:57:43.132Z"
+    },
+    {
+      "id": 5,
+      "username": "child_nour",
+      "email": "nour@hopetouch.edu",
+      "password_hash": "f671590e56c66e432d7092539861daf9b00a4f1553788992f69ef2ef7ed773c8e505d287835ab8e4ebf6012b97c41005380ec6b286dad648498b8fd921c1da24",
+      "salt": "05bf5f564d903361a7dacf058c1caf6a",
+      "role_id": 4,
+      "full_name": "نور سالم الراشد",
+      "phone": "",
+      "is_active": true,
+      "created_at": "2026-11-05T15:57:43.132Z"
+    }
+  ],
+  "teachers": [
+    {
+      "id": 1,
+      "user_id": 2,
+      "specialization": "تربية خاصة وتعديل سلوك ونطق وتخاطب",
+      "license_number": "SP-EDU-8921",
+      "bio": "خبرة 8 سنوات في التدخل المبكر للأطفال ذوي طيف التوحد ومتلازمة داون وتطبيق نظام PECS."
+    }
+  ],
+  "parents": [
+    {
+      "id": 1,
+      "user_id": 3,
+      "relationship_type": "أب",
+      "full_name": "خالد المنصور",
+      "phone": "0503334455",
+      "address": "الرياض - حي النخيل"
+    }
+  ],
+  "children": [
+    {
+      "id": 1,
+      "user_id": 4,
+      "full_name": "عمر خالد المنصور",
+      "gender": "ذكر",
+      "birth_date": "2021-04-10",
+      "age": 5,
+      "disability_id": 1,
+      "disability_code": "autism",
+      "current_level": 1,
+      "sensory_profile": "حساسية صوتية متوسطة للأصوات المفاجئة، استجابة بصرية ممتازة للألوان الهادئة.",
+      "avatar": "boy-1",
+      "emergency_contact": "0503334455 (الأب)",
+      "created_at": "2026-11-05T15:57:43.133Z"
+    },
+    {
+      "id": 2,
+      "user_id": 5,
+      "full_name": "نور سالم الراشد",
+      "gender": "أنثى",
+      "birth_date": "2019-08-20",
+      "age": 7,
+      "disability_id": 2,
+      "disability_code": "down",
+      "current_level": 2,
+      "sensory_profile": "تفاعل حركي وبصري رائع، تحب الأناشيد الإيقاعية والتكرار البصري.",
+      "avatar": "girl-1",
+      "emergency_contact": "0504445566 (الأم)",
+      "created_at": "2026-11-05T15:57:43.133Z"
+    }
+  ],
+  "relationships": [
+    {
+      "id": 1,
+      "child_id": 1,
+      "teacher_id": 1,
+      "parent_id": 1,
+      "assigned_date": "2026-09-01",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "child_id": 2,
+      "teacher_id": 1,
+      "parent_id": 1,
+      "assigned_date": "2026-09-10",
+      "status": "active"
+    }
+  ],
+  "disabilities": [
+    {
+      "id": 1,
+      "code": "autism",
+      "name_ar": "اضطراب طيف التوحد (Autism Spectrum Disorder)",
+      "description": "اضطراب نمائي عصبي يؤثر في التواصل الاجتماعي والتفاعل اللفظي وغير اللفظي مع سلوكيات نمطية.",
+      "min_age": 3,
+      "max_age": 12,
+      "icon": "fa-puzzle-piece",
+      "color": "#2563eb"
+    },
+    {
+      "id": 2,
+      "code": "down",
+      "name_ar": "متلازمة داون (Down Syndrome)",
+      "description": "حالة وراثية تنتج عن وجود نسخة إضافية من الكروموسوم 21 تسبب تأخرًا ذهنيًا ونمائيًا خفيفًا إلى متوسط.",
+      "min_age": 3,
+      "max_age": 12,
+      "icon": "fa-star",
+      "color": "#d97706"
+    }
+  ],
+  "skills": [
+    {
+      "id": 1,
+      "disability_id": 1,
+      "category": "تواصل وبصريات",
+      "skill_name": "التواصل البصري والتنبيه الحسي",
+      "target_age_min": 3,
+      "target_age_max": 5,
+      "level": 0
+    },
+    {
+      "id": 2,
+      "disability_id": 1,
+      "category": "تواصل بديل AAC",
+      "skill_name": "التعبير بالصور عبر بطاقات PECS",
+      "target_age_min": 3,
+      "target_age_max": 6,
+      "level": 1
+    },
+    {
+      "id": 3,
+      "disability_id": 1,
+      "category": "لغة وتخاطب",
+      "skill_name": "نطق الكلمات الأولى وتسمية الأشياء",
+      "target_age_min": 4,
+      "target_age_max": 8,
+      "level": 2
+    },
+    {
+      "id": 4,
+      "disability_id": 1,
+      "category": "تفاعل اجتماعي",
+      "skill_name": "تبادل الأدوار وفهم المشاعر والانفعالات",
+      "target_age_min": 6,
+      "target_age_max": 10,
+      "level": 3
+    },
+    {
+      "id": 5,
+      "disability_id": 1,
+      "category": "استقلالية وحوار",
+      "skill_name": "بدء المحادثة وطلب المساعدة المباشرة",
+      "target_age_min": 8,
+      "target_age_max": 12,
+      "level": 4
+    },
+    {
+      "id": 6,
+      "disability_id": 2,
+      "category": "نطق ولغة",
+      "skill_name": "المحاكاة الصوتية ونطق الكلمات اليومية",
+      "target_age_min": 3,
+      "target_age_max": 6,
+      "level": 1
+    },
+    {
+      "id": 7,
+      "disability_id": 2,
+      "category": "إدراك معرفي",
+      "skill_name": "التمييز بين الأشكال والألوان الأساسية",
+      "target_age_min": 3,
+      "target_age_max": 7,
+      "level": 1
+    },
+    {
+      "id": 8,
+      "disability_id": 2,
+      "category": "حساب وأرقام",
+      "skill_name": "العد المطابق من 1 إلى 10 بالصور",
+      "target_age_min": 6,
+      "target_age_max": 9,
+      "level": 2
+    },
+    {
+      "id": 9,
+      "disability_id": 2,
+      "category": "مهارات حياتية",
+      "skill_name": "تسلسل خطوات النظافة الشخصية والعناية الذاتية",
+      "target_age_min": 7,
+      "target_age_max": 12,
+      "level": 3
+    }
+  ],
+  "assessments": [
+    {
+      "id": 1,
+      "child_id": 1,
+      "teacher_id": 1,
+      "assessment_date": "2026-10-15",
+      "domain": "التواصل والتفاعل الاجتماعي",
+      "baseline_score": 45,
+      "max_score": 100,
+      "status": "completed",
+      "summary": "يستجيب عمر للمثيرات البصرية بسهولة، ولديه رغبة في التواصل عند استخدام بطاقات PECS، لكنه يحتاج تدرجاً في خفض المساعدة الجسدية.",
+      "recommendations": "التركيز على بطاقات التواصل اليومية (ماء، أكل، حمام)، وتثبيت روتين جدول الأنشطة البصري."
+    },
+    {
+      "id": 2,
+      "child_id": 2,
+      "teacher_id": 1,
+      "assessment_date": "2026-10-18",
+      "domain": "اللغة التعبيرية والمهارات الإدراكية",
+      "baseline_score": 60,
+      "max_score": 100,
+      "status": "completed",
+      "summary": "تستطيع نور نطق الكلمات المفردة بوضوح عند تقليد النموذج، وتحتاج لدعم في ربط كلمتين معاً.",
+      "recommendations": "تدريب على أنشطة التسمية المزدوجة ولعبة الأشكال والألوان المتطابقة."
+    }
+  ],
+  "ieps": [
+    {
+      "id": 1,
+      "child_id": 1,
+      "teacher_id": 1,
+      "title": "الخطة الفردية للفصل الدراسي الأول - عمر",
+      "start_date": "2026-10-01",
+      "end_date": "2027-01-30",
+      "summary": "بناء مهارات التواصل الوظيفي عبر بطاقات PECS وتطوير مهارة التعبير عن الرغبات والاستجابة لجدول النشاط اليومي.",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "child_id": 2,
+      "teacher_id": 1,
+      "title": "الخطة الفردية للفصل الدراسي الأول - نور",
+      "start_date": "2026-10-01",
+      "end_date": "2027-01-30",
+      "summary": "توسيع الحصيلة اللغوية إلى 50 كلمة ومطابقة الأرقام 1-10 وتسلسل خطوات العناية الشخصية.",
+      "status": "active"
+    }
+  ],
+  "goals": [
+    {
+      "id": 1,
+      "iep_id": 1,
+      "skill_id": 2,
+      "goal_text": "أن يسحب الطفل بطاقة \"أريد ماء\" ويسلمها للمعلم عند الشعور بالعطش بنسبة نجاح 80% بمساعدة إيمائية خفيفة.",
+      "target_date": "2026-12-01",
+      "criteria": "8 من 10 محاولات صحيحة خلال 3 جلسات متتالية",
+      "status": "in_progress",
+      "progress_percentage": 65
+    },
+    {
+      "id": 2,
+      "iep_id": 1,
+      "skill_id": 1,
+      "goal_text": "أن يركز الطفل انتباهه البصري على بطاقة النشاط لمدة 5 ثوانٍ متصلة عند سماع اسمه.",
+      "target_date": "2026-11-20",
+      "criteria": "100% نجاح في 5 جلسات",
+      "status": "achieved",
+      "progress_percentage": 100
+    },
+    {
+      "id": 3,
+      "iep_id": 2,
+      "skill_id": 7,
+      "goal_text": "أن تطابق الطفلة 4 أشكال هندسية (دائرة، مربع، مثلث، نجمة) مع نظائرها بنجاح تام وبشكل مستقل.",
+      "target_date": "2026-12-15",
+      "criteria": "90% دقة مستقلة",
+      "status": "in_progress",
+      "progress_percentage": 75
+    }
+  ],
+  "journey_stages": [
+    {
+      "id": 1,
+      "child_id": 1,
+      "stage_number": 0,
+      "stage_name": "المستوى 0: التهدئة والتحفيز الحسي (Sensory Foundations)",
+      "description": "ألعاب لمسية هادئة وفقاعات لتنظيم الإحساس دون متطلبات لغوية مجهدة.",
+      "is_unlocked": true,
+      "is_completed": true
+    },
+    {
+      "id": 2,
+      "child_id": 1,
+      "stage_number": 1,
+      "stage_name": "المستوى 1: الربط بين الصوت والرمز البصري (PECS Starter)",
+      "description": "لمس الصورة وسماع نطقها الواضح والربط بين الرمز والطلب الحقيقي.",
+      "is_unlocked": true,
+      "is_completed": false
+    },
+    {
+      "id": 3,
+      "child_id": 1,
+      "stage_number": 2,
+      "stage_name": "المستوى 2: تكوين جملة الطلب (أنا أريد...)",
+      "description": "تركيب شريط الجملة المصورة لطلب الاحتياجات اليومية.",
+      "is_unlocked": false,
+      "is_completed": false
+    },
+    {
+      "id": 4,
+      "child_id": 1,
+      "stage_number": 3,
+      "stage_name": "المستوى 3: التعبير عن المشاعر والتفاعل الوجداني",
+      "description": "التعرف على وجوه الفرح والحزن والغضب والتعبير عن الشعور الداخلي.",
+      "is_unlocked": false,
+      "is_completed": false
+    },
+    {
+      "id": 5,
+      "child_id": 1,
+      "stage_number": 4,
+      "stage_name": "المستوى 4: المحادثة والتفاعل الاجتماعي والاستقلالية",
+      "description": "سيناريوهات الحياة الواقعية وتبادل التحية والحديث مع الآخرين.",
+      "is_unlocked": false,
+      "is_completed": false
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "disability_type": "autism",
+      "age_group": "3-5",
+      "stage_id": 1,
+      "title": "فرقعة فقاعات الهدوء الحسي 🫧",
+      "description": "نشاط مهدئ للأصابع والتركيز: انقر على الفقاعات لسماع صوت ناعم ومريح مع رؤية ألوان مهدئة.",
+      "category": "sensory",
+      "icon": "fa-soap",
+      "color": "#38bdf8"
+    },
+    {
+      "id": 2,
+      "disability_type": "autism",
+      "age_group": "3-5",
+      "stage_id": 2,
+      "title": "لوحة بطاقات التواصل السريعة (PECS) 🗂️",
+      "description": "اختر ما تريده الآن: ماء، عصير، حمام، راحة، لعبة. استمع للكلمة بصوت واضح ونطق لطيف.",
+      "category": "aac",
+      "icon": "fa-shapes",
+      "color": "#6366f1"
+    },
+    {
+      "id": 3,
+      "disability_type": "autism",
+      "age_group": "6-8",
+      "stage_id": 3,
+      "title": "تكوين جملة الطلب: أنا أريد... 🧩",
+      "description": "ضع رمز \"أنا أريد\" ثم اختر الشيء المحبب لك وشاهد الجملة تنطق كاملة مع تشجيع واحتفال.",
+      "category": "language",
+      "icon": "fa-puzzle-piece",
+      "color": "#ec4899"
+    },
+    {
+      "id": 4,
+      "disability_type": "autism",
+      "age_group": "9-12",
+      "stage_id": 4,
+      "title": "مختبر المشاعر والمواقف الاجتماعية 🎭",
+      "description": "كيف يشعر صديقنا في هذا الموقف؟ اختر الشعور المناسب واكتشف الحل الأفضل للتعامل معه.",
+      "category": "social",
+      "icon": "fa-face-smile",
+      "color": "#10b981"
+    },
+    {
+      "id": 5,
+      "disability_type": "down",
+      "age_group": "3-5",
+      "stage_id": 6,
+      "title": "أصدقاء الأصوات والكلمات الأولى 🗣️",
+      "description": "استمع إلى أصوات الحيوانات والكلمات المحببة (ماما، بابا، ماء، قطة) وردد معنا ببهجة.",
+      "category": "speech",
+      "icon": "fa-microphone",
+      "color": "#f59e0b"
+    },
+    {
+      "id": 6,
+      "disability_type": "down",
+      "age_group": "6-8",
+      "stage_id": 7,
+      "title": "ألوان وأشكال الأبطال 🎨",
+      "description": "طابق الدائرة الحمراء والمربع الأزرق والمثلث الأخضر مع أشكالها المطابقة واسمع التعزيز الفوري.",
+      "category": "cognitive",
+      "icon": "fa-palette",
+      "color": "#8b5cf6"
+    },
+    {
+      "id": 7,
+      "disability_type": "down",
+      "age_group": "9-12",
+      "stage_id": 8,
+      "title": "عد النجوم والأرقام الذكية 🔢",
+      "description": "عد النجوم اللامعة من 1 إلى 10 وضع الرقم المناسب في صندوق الكنز لتفوز بنجمة ذهبية.",
+      "category": "math",
+      "icon": "fa-star",
+      "color": "#14b8a6"
+    },
+    {
+      "id": 8,
+      "disability_type": "both",
+      "age_group": "3-12",
+      "stage_id": 9,
+      "title": "بطل المهارات الحياتية: غسيل اليدين والروتين 🧼",
+      "description": "خطوات مصورة خطوة بخطوة بالترتيب: فتح الصنبور، وضع الصابون، فرك اليدين، التجفيف بالمنشفة.",
+      "category": "life-skills",
+      "icon": "fa-hands-bubbles",
+      "color": "#06b6d4"
+    }
+  ],
+  "activity_levels": [],
+  "attempts": [],
+  "help_prompts": [],
+  "progress_logs": [],
+  "sessions": [
+    {
+      "id": 1,
+      "child_id": 1,
+      "teacher_id": 1,
+      "session_date": "2026-11-03",
+      "duration_minutes": 45,
+      "objectives": "تدريب على سحب بطاقة الطلب (ماء / عصير) مع تقليل المساعدة اللفظية.",
+      "outcome": "أظهر عمر استجابة ممتازة واستطاع طلب الماء مرتين متتاليتين بمساعدة إيمائية فقط.",
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "child_id": 1,
+      "teacher_id": 1,
+      "session_date": "2026-11-06",
+      "duration_minutes": 45,
+      "objectives": "الربط بين الشعور بالسعادة والوجه المبتسم في نشاط المشاعر.",
+      "outcome": "",
+      "status": "scheduled"
+    }
+  ],
+  "teacher_notes": [
+    {
+      "id": 1,
+      "child_id": 1,
+      "teacher_id": 1,
+      "session_id": 1,
+      "note_type": "behavioral",
+      "note_text": "كان تركيز عمر ممتازاً اليوم وهادئاً جداً بعد استخدام وضع الهدوء الحسي قبل بداية الجلسة.",
+      "created_at": "2026-11-03T11:00:00Z"
+    },
+    {
+      "id": 2,
+      "child_id": 1,
+      "teacher_id": 1,
+      "session_id": 1,
+      "note_type": "sensory",
+      "note_text": "يفضل دائماً نبرة الصوت الهادئة بسرعة 0.75، تجنب الأصوات العالية أو النغمات المفاجئة.",
+      "created_at": "2026-11-03T11:15:00Z"
+    }
+  ],
+  "home_activities": [
+    {
+      "id": 1,
+      "child_id": 1,
+      "teacher_id": 1,
+      "parent_id": 1,
+      "title": "تطبيق بطاقة الماء عند وجبة الغداء",
+      "instructions": "ضع بطاقة الماء على الطاولة أمام عمر أثناء وجبة الغداء، وشجعه على لمسها أو تسليمها قبل تقديم الكوب.",
+      "due_date": "2026-11-08",
+      "status": "completed",
+      "parent_feedback": "نجحنا في ذلك اليوم! أشار للبطاقة قبل أن يأخذ الكوب وكان سعيداً بصوت التطبيق.",
+      "completed_at": "2026-11-04T14:30:00Z"
+    },
+    {
+      "id": 2,
+      "child_id": 1,
+      "teacher_id": 1,
+      "parent_id": 1,
+      "title": "الروتين البصري قبل النوم",
+      "instructions": "عرض خطوات النوم البسيطة (تفريش الأسنان، ارتداء البيجاما، قراءة قصة قصيرة).",
+      "due_date": "2026-11-10",
+      "status": "assigned",
+      "parent_feedback": "",
+      "completed_at": null
+    }
+  ],
+  "reports": [
+    {
+      "id": 1,
+      "child_id": 1,
+      "teacher_id": 1,
+      "report_type": "progress_monthly",
+      "title": "تقرير التقدم الشهري - أكتوبر 2026",
+      "period_start": "2026-10-01",
+      "period_end": "2026-10-31",
+      "content_json": {
+        "attendance_rate": "95%",
+        "achieved_goals": 1,
+        "in_progress_goals": 1,
+        "total_attempts": 42,
+        "success_rate": "78%",
+        "clinical_notes": "تحسن ملحوظ في المبادأة بالتواصل البصري والتعبير عن الاحتياج الأساسي."
+      },
+      "generated_at": "2026-11-01T09:00:00Z"
+    }
+  ],
+  "customizations": [
+    {
+      "id": 1,
+      "child_id": 1,
+      "sensory_calm_mode": true,
+      "high_contrast": false,
+      "dark_mode": false,
+      "font_size": 18,
+      "audio_rate": 0.75,
+      "audio_pitch": 1.05,
+      "sound_effects": true,
+      "dyslexia_font": true,
+      "show_reading_ruler": false
+    },
+    {
+      "id": 2,
+      "child_id": 2,
+      "sensory_calm_mode": false,
+      "high_contrast": false,
+      "dark_mode": false,
+      "font_size": 20,
+      "audio_rate": 0.8,
+      "audio_pitch": 1.1,
+      "sound_effects": true,
+      "dyslexia_font": false,
+      "show_reading_ruler": false
+    }
+  ],
+  "resources": [
+    {
+      "id": 1,
+      "title": "دليل تطبيق نظام التواصل بتبادل الصور (PECS) خطوة بخطوة",
+      "category": "aac",
+      "file_type": "pdf",
+      "description": "شرح المراحل الست لنظام PECS وتطبيقه العملي في الغرفة الصفية والمنزل.",
+      "added_by": "أ. سارة الأحمد",
+      "tags": [
+        "PECS",
+        "توحد",
+        "تواصل بديل"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "جدول الروتين اليومي المصور القابل للطباعة",
+      "category": "schedules",
+      "file_type": "printable",
+      "description": "بطاقات بصرية عالية الجودة لأنشطة الصباح، المدرسة، الوجبات، ووقت النوم.",
+      "added_by": "أ. سارة الأحمد",
+      "tags": [
+        "جدول بصري",
+        "روتين",
+        "استقلالية"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "دليل التهيئة الحسية وتخفيف التوتر للأطفال ذوي الحساسية اللمسية والصوتية",
+      "category": "sensory",
+      "file_type": "guide",
+      "description": "استراتيجيات تعديل البيئة الصفية والإضاءة والتحكم بالمثيرات.",
+      "added_by": "د. عبد الله الشمري",
+      "tags": [
+        "حواس",
+        "بيئة هادئة",
+        "تعديل بيئي"
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "id": 1,
+      "child_id": 1,
+      "badge_name": "بطل التركيز البصري 🌟",
+      "badge_icon": "fa-star",
+      "points": 50,
+      "reason": "إكمال نشاط فرقعة الفقاعات ومطابقة بطاقتين بنجاح",
+      "awarded_at": "2026-11-03T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "child_id": 1,
+      "badge_name": "صديق الكلمات الطيبة 🗣️",
+      "badge_icon": "fa-medal",
+      "points": 40,
+      "reason": "استخدام بطاقة أريد ماء مرتين متتاليتين",
+      "awarded_at": "2026-11-04T12:00:00Z"
+    },
+    {
+      "id": 3,
+      "child_id": 2,
+      "badge_name": "أميرة الألوان الذكية 🎨",
+      "badge_icon": "fa-crown",
+      "points": 60,
+      "reason": "مطابقة الأشكال الهندسية دون أي خطأ",
+      "awarded_at": "2026-11-04T11:00:00Z"
+    }
+  ],
+  "audit_logs": []
+}
