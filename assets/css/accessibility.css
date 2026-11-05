@@ -1,0 +1,222 @@
+/* ==========================================================================
+   معًا - عالم بلا حواجز | Accessibility & High-Contrast Module
+   WCAG 2.1 AAA Compliant Styles
+   ========================================================================== */
+
+/* 1. التباين الفائق (High Contrast Mode) */
+body.high-contrast {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body.high-contrast header,
+body.high-contrast footer,
+body.high-contrast .panel,
+body.high-contrast .disability-card,
+body.high-contrast .interactive-card,
+body.high-contrast .settings-box,
+body.high-contrast .result-box,
+body.high-contrast .schedule-item,
+body.high-contrast .tabs,
+body.high-contrast .a11y-panel {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffff00 !important;
+  box-shadow: none !important;
+}
+
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast p,
+body.high-contrast label,
+body.high-contrast nav a,
+body.high-contrast span {
+  color: #ffffff !important;
+}
+
+body.high-contrast .hero {
+  background: #000000 !important;
+  border-bottom: 2px solid #ffff00 !important;
+}
+
+body.high-contrast a,
+body.high-contrast .logo,
+body.high-contrast .hero h1,
+body.high-contrast .hero h1 .highlight,
+body.high-contrast .schedule-time-tag,
+body.high-contrast .logo-badge {
+  color: #ffff00 !important;
+}
+
+body.high-contrast .btn,
+body.high-contrast button {
+  background: #000000 !important;
+  color: #ffff00 !important;
+  border: 2px solid #ffff00 !important;
+}
+
+body.high-contrast .btn:hover,
+body.high-contrast button:hover {
+  background: #ffff00 !important;
+  color: #000000 !important;
+}
+
+body.high-contrast textarea,
+body.high-contrast input {
+  background: #000000 !important;
+  color: #ffff00 !important;
+  border: 2px solid #ffff00 !important;
+}
+
+body.high-contrast .tab-btn {
+  background: #111111 !important;
+  color: #ffff00 !important;
+  border: 1px solid #ffff00 !important;
+}
+
+body.high-contrast .tab-btn.active {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+body.high-contrast .tip-banner {
+  background: #1a1a00 !important;
+  color: #ffff00 !important;
+  border: 2px solid #ffff00 !important;
+}
+
+/* 2. الوضع المظلم العصري (Dark Mode) */
+body.dark-mode {
+  --bg-page: #0b1120;
+  --bg-surface: #1e293b;
+  --bg-surface-elevated: #334155;
+  --bg-muted: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --primary-light: #1e3a8a;
+  --primary-border: #3b82f6;
+  border-color: #334155;
+}
+
+body.dark-mode header {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: #334155;
+}
+
+body.dark-mode .hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  border-color: #334155;
+}
+
+body.dark-mode .hero h1 {
+  color: #93c5fd;
+}
+
+body.dark-mode .disability-card,
+body.dark-mode .panel,
+body.dark-mode .interactive-card,
+body.dark-mode .schedule-item {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-mode .interactive-card h3,
+body.dark-mode .panel h2,
+body.dark-mode .section-title h2 {
+  color: #93c5fd;
+}
+
+body.dark-mode textarea.accessible-input {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #475569;
+}
+
+body.dark-mode .result-box {
+  background: #1e293b;
+  border-color: #3b82f6;
+  color: #93c5fd;
+}
+
+body.dark-mode .tabs {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+body.dark-mode .tab-btn.active {
+  background: #1e293b;
+  color: #60a5fa;
+}
+
+/* 3. وضع خط القراءة المريح / عسر القراءة (Dyslexia Friendly Mode) */
+body.dyslexia-font {
+  font-family: 'Comic Sans MS', 'Trebuchet MS', 'Cairo', sans-serif !important;
+  letter-spacing: 0.08em !important;
+  word-spacing: 0.15em !important;
+  line-height: 2.1 !important;
+}
+
+/* 4. وضع التدرج الرمادي (Grayscale / Reduced Sensory) */
+body.grayscale-mode {
+  filter: grayscale(100%) !important;
+}
+
+/* 5. شريط أدوات سهولة الوصول العائم (Accessibility Floating / Quick Bar) */
+.a11y-quick-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-surface);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: var(--shadow-sm);
+}
+
+.a11y-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-main);
+  padding: 6px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.a11y-btn:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.a11y-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* 6. مسطرة القراءة (Reading Guide Ruler) */
+#readingRuler {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 38px;
+  background: rgba(254, 240, 138, 0.28);
+  border-top: 2px solid #eab308;
+  border-bottom: 2px solid #eab308;
+  pointer-events: none;
+  z-index: 99999;
+  display: none;
+  transition: top 0.05s ease-out;
+}
+
+body.ruler-active #readingRuler {
+  display: block;
+}
+
